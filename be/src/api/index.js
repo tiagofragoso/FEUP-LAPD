@@ -1,8 +1,8 @@
 const { Router } = require("express");
-const query_router = require("./routes/query");
+const search_router = require("./routes/search");
 
 const app = Router();
 
-app.use("/query", query_router);
+app.use("/search", search_router);
 
 module.exports = app;
