@@ -23,9 +23,24 @@ const HomePage = () => {
                 <TextField inputRef={register} name="q" label="Search" />
                 <Button variant="contained" color="primary" type="submit">Search</Button>
             </form>
-            <p>Loading: {loading.toString()}</p>
-            <p>Error: {error.toString()}</p>
-            <p>Results: {results && results.toString()}</p>
+            { loading && <p>Loading</p> }
+            { error && <p>Error: {error.toString()}</p> }
+            { !loading && !error && results &&
+                <>
+                    <h2>Tracks</h2>
+                    {
+                        results.tracks.items.map((t) => <p key={t.name}>{t.name}</p>)
+                    }
+                    <h2>Artists</h2>
+                    {
+                        results.artists.items.map((a) => <p key={a.name}>{a.name}</p>)
+                    }
+                    <h2>Albums</h2>
+                    {
+                        results.albums.items.map((a) => <p key={a.name}>{a.name}</p>)
+                    }
+                </>
+            }
         </div>
     );
 

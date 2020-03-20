@@ -3,6 +3,7 @@ import { setSearchError, setSearchLoading, setSearchResults } from "../actions/s
 
 export const search = (query) => async (dispatch) => {
     dispatch(setSearchLoading(true));
+    dispatch(setSearchError(false));
 
     try {
         const res = await apiFetch("search", query);

@@ -16,7 +16,7 @@ export default (state = initialState, action) => {
         case searchTypes.SET_SEARCH_ERROR:
             return {
                 ...state,
-                error: action.payload || true,
+                error: action.payload,
             };
         case searchTypes.SET_SEARCH_LOADING:
             return {
