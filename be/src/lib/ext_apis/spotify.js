@@ -46,6 +46,7 @@ const request = async (url, options = {}) => {
 
     } catch (err) {
         if (err.response.status === 401) {
+            bearer_token = null;
             console.log("Got 401. Re-authenticating");
             return request(url, options);
         } else {
@@ -66,6 +67,9 @@ const search = (query) => request(
     },
 );
 
+const lookup_track = (id) => request(`https://api.spotify.com/v1/tracks/${id}`);
+
 module.exports = {
     search,
+    lookup_track,
 };

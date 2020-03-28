@@ -4,6 +4,7 @@ import { Button, TextField } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 
 import { search } from "../services/searchService";
+import SearchResult from "../components/SearchResult";
 
 const HomePage = () => {
 
@@ -29,15 +30,15 @@ const HomePage = () => {
                 <>
                     <h2>Tracks</h2>
                     {
-                        results.tracks.items.map((t) => <p key={t.name}>{t.name}</p>)
+                        results.tracks.items.map((item) => <SearchResult key={item.id} item={item} type="track" />)
                     }
                     <h2>Artists</h2>
                     {
-                        results.artists.items.map((a) => <p key={a.name}>{a.name}</p>)
+                        results.artists.items.map((item) => <SearchResult key={item.id} item={item} type="artist" />)
                     }
                     <h2>Albums</h2>
                     {
-                        results.albums.items.map((a) => <p key={a.name}>{a.name}</p>)
+                        results.albums.items.map((item) => <SearchResult key={item.id} item={item} type="album" />)
                     }
                 </>
             }
