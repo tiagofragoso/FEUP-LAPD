@@ -84,9 +84,18 @@ const lookup_tracks = (ids) => request(
 
 const lookup_album = (id) => request(`https://api.spotify.com/v1/albums/${id}`);
 
+const lookup_artist = (id) => request(`https://api.spotify.com/v1/artists/${id}`);
+
+const lookup_artist_top_tracks = (id) => request(`https://api.spotify.com/v1/artists/${id}/top-tracks`);
+
+const lookup_artist_albums = (id) => request(`https://api.spotify.com/v1/artists/${id}/albums`);
+
 module.exports = {
     search,
     lookup_track,
     lookup_tracks,
     lookup_album,
+    lookup_artist,
+    lookup_artist_top_tracks,
+    lookup_artist_albums,
 };
