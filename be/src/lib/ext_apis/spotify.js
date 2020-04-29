@@ -3,12 +3,15 @@ const qs = require("querystring");
 
 const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } = require("../../config");
 
+const API_URL = "https://api.spotify.com/v1";
+const AUTH_API_URL = "https://accounts.spotify.com/api/token";
+
 let bearer_token;
 
 const auth = async () => {
     try {
         const res = await axios.post(
-            "https://accounts.spotify.com/api/token",
+            AUTH_API_URL,
             qs.stringify({ grant_type: "client_credentials" }),
             {
                 headers: {
@@ -69,7 +72,7 @@ const request = async (url, options = {}) => {
 };
 
 const search = (query) => request(
-    "https://api.spotify.com/v1/search",
+    `${API_URL}/search`,
     {
         params: {
             "q": query,
@@ -79,10 +82,10 @@ const search = (query) => request(
     },
 );
 
-const lookup_track = (id) => request(`https://api.spotify.com/v1/tracks/${id}`);
+const lookup_track = (id) => request(`${API_URL}/tracks/${id}`);
 
 const lookup_tracks = (ids) => request(
-    "https://api.spotify.com/v1/tracks/",
+    `${API_URL}/tracks/`,
     {
         params: {
             "ids": ids.join(","),
@@ -90,13 +93,13 @@ const lookup_tracks = (ids) => request(
     },
 );
 
-const lookup_album = (id) => request(`https://api.spotify.com/v1/albums/${id}`);
+const lookup_album = (id) => request(`${API_URL}/albums/${id}`);
 
-const lookup_artist = (id) => request(`https://api.spotify.com/v1/artists/${id}`);
+const lookup_artist = (id) => request(`${API_URL}/artists/${id}`);
 
-const lookup_artist_top_tracks = (id) => request(`https://api.spotify.com/v1/artists/${id}/top-tracks`);
+const lookup_artist_top_tracks = (id) => request(`${API_URL}/artists/${id}/top-tracks`);
 
-const lookup_artist_albums = (id) => request(`https://api.spotify.com/v1/artists/${id}/albums`);
+const lookup_artist_albums = (id) => request(`${API_URL}/artists/${id}/albums`);
 
 module.exports = {
     search,
