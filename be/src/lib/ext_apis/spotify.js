@@ -14,8 +14,8 @@ const auth = async () => {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
             auth: {
-                username: SPOTIFY_CLIENT_ID,
-                password: SPOTIFY_CLIENT_SECRET,
+                "username": SPOTIFY_CLIENT_ID,
+                "password": SPOTIFY_CLIENT_SECRET,
             },
         });
 
@@ -35,6 +35,10 @@ const request = async (url, options = {}) => {
             url,
             {
                 ...options,
+                params: {
+                    ...options.params,
+                    "market": "pt",
+                },
                 headers: {
                     ...options.headers,
                     "Authorization": `Bearer ${bearer_token}`,
@@ -60,16 +64,29 @@ const search = (query) => request(
     "https://api.spotify.com/v1/search",
     {
         params: {
-            q: query,
-            type: "album,artist,track",
-            limit: "5",
+            "q": query,
+            "type": "album,artist,track",
+            "limit": "5",
         },
     },
 );
 
 const lookup_track = (id) => request(`https://api.spotify.com/v1/tracks/${id}`);
 
+const lookup_tracks = (ids) => request(
+    "https://api.spotify.com/v1/tracks/",
+    {
+        params: {
+            "ids": ids.join(","),
+        },
+    },
+);
+
+const lookup_album = (id) => request(`https://api.spotify.com/v1/albums/${id}`);
+
 module.exports = {
     search,
     lookup_track,
+    lookup_tracks,
+    lookup_album,
 };
