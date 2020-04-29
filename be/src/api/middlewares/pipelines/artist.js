@@ -4,15 +4,7 @@ const { get_extract } = require("../../../lib/ext_apis/wikipedia");
 const artist_pipeline = async ({ params }, res) => {
     const { id } = params;
 
-    let spotify_artist_res;
-
-    try {
-        spotify_artist_res = await lookup_artist(id);
-    } catch (err) {
-        console.error(`Artist lookup failed: ${err}`);
-        res.status(500).send();
-        return;
-    }
+    const spotify_artist_res = await lookup_artist(id);
 
     if (!spotify_artist_res) {
         res.status(500).send();

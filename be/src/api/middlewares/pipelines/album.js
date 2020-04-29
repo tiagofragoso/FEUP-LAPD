@@ -4,15 +4,7 @@ const { get_extract } = require("../../../lib/ext_apis/wikipedia");
 const album_pipeline = async ({ params }, res) => {
     const { id } = params;
 
-    let spotify_album_res;
-
-    try {
-        spotify_album_res = await lookup_album(id);
-    } catch (err) {
-        console.error(`Album lookup failed: ${err}`);
-        res.status(500).send();
-        return;
-    }
+    const spotify_album_res = await lookup_album(id);
 
     if (!spotify_album_res) {
         res.status(500).send();

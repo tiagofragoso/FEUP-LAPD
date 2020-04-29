@@ -3,12 +3,11 @@ const { search } = require("../../../lib/ext_apis/spotify");
 const search_pipeline = async ({ query }, res) => {
     const { q } = query;
 
-    try {
-        const spotify_res = await search(q);
+    const spotify_res = await search(q);
+    if (spotify_res) {
         res.status(200).send(spotify_res);
-    } catch (err) {
+    } else {
         res.status(500).send();
-        return;
     }
 
 };

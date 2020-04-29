@@ -6,29 +6,37 @@ const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } = require("../../config");
 let bearer_token;
 
 const auth = async () => {
-    const res = await axios.post(
-        "https://accounts.spotify.com/api/token",
-        qs.stringify({ grant_type: "client_credentials" }),
-        {
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            auth: {
-                "username": SPOTIFY_CLIENT_ID,
-                "password": SPOTIFY_CLIENT_SECRET,
-            },
-        });
+    try {
+        const res = await axios.post(
+            "https://accounts.spotify.com/api/token",
+            qs.stringify({ grant_type: "client_credentials" }),
+            {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                auth: {
+                    "username": SPOTIFY_CLIENT_ID,
+                    "password": SPOTIFY_CLIENT_SECRET,
+                },
+            });
 
-    const { data } = res;
-    console.log("Setting bearer token");
-    bearer_token = data.access_token;
+        const { data } = res;
+        console.log("Setting bearer token");
+        bearer_token = data.access_token;
+        return true;
+    } catch (err) {
+        console.error("Error authenticating to Spotify: ", err);
+        return false;
+    }
 };
 
 const request = async (url, options = {}) => {
     try {
         if (!bearer_token) {
             console.log("No bearer token set. Re-authenticating");
-            await auth();
+            const success = await auth();
+            if (!success)
+                return null;
         }
 
         const res = await axios.get(
@@ -55,7 +63,7 @@ const request = async (url, options = {}) => {
             return request(url, options);
         } else {
             console.error(err);
-            throw err;
+            return null;
         }
     }
 };
