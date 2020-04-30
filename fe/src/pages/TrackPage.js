@@ -4,6 +4,8 @@ import { getTrack } from "../services/trackService";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
+import PageLayout from "../components/PageLayout";
+
 const useStyles = makeStyles((theme) => ({
     lyrics: {
         fontFamily: theme.typography.fontFamily,
@@ -21,22 +23,24 @@ export const TrackPage = ({ id }) => {
     const classes = useStyles();
 
     return (
-        <div>
-            { loading && <p>Loading</p> }
-            { error && <p>Error: {error.toString()}</p> }
-            { !loading && !error && track  &&
-            <>
-                <Typography component="h3" variant="h3">
-                    {track.name}
-                </Typography>
-                <Typography component="h5" variant="h5">
-                    {track.artists.map((a) => a.name).toString()}
-                </Typography>
-                {track.lyrics && <pre className={classes.lyrics}>{track.lyrics}</pre>}
-                {!track.lyrics && <p>Lyrics not found</p>}
-            </>
-            }
-        </div>
+        <PageLayout>
+            <div>
+                { loading && <p>Loading</p> }
+                { error && <p>Error: {error.toString()}</p> }
+                { !loading && !error && track  &&
+                <>
+                    <Typography component="h3" variant="h3">
+                        {track.name}
+                    </Typography>
+                    <Typography component="h5" variant="h5">
+                        {track.artists.map((a) => a.name).toString()}
+                    </Typography>
+                    {track.lyrics && <pre className={classes.lyrics}>{track.lyrics}</pre>}
+                    {!track.lyrics && <p>Lyrics not found</p>}
+                </>
+                }
+            </div>
+        </PageLayout>
     );
 };
 
