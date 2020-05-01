@@ -1,5 +1,4 @@
 import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
-import { blue, purple } from "@material-ui/core/colors";
 
 const bodyFontFamily = ["\"Rubik\"", "Roboto", "\"Helvetica\"", "Arial", "sans-serif"];
 const headerFontFamily = ["\"Karla\"", ...bodyFontFamily];
@@ -28,8 +27,12 @@ const theme = createMuiTheme({
         },
     },
     palette: {
-        primary: blue,
-        secondary: purple,
+        primary: {
+            main: "#FF7BAC",
+        },
+        secondary: {
+            main: "#F7931E",
+        },
         text: {
             primary: "#444545",
         },
