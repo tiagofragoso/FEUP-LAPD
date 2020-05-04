@@ -1,7 +1,7 @@
 import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
 
-const bodyFontFamily = ["\"Rubik\"", "Roboto", "\"Helvetica\"", "Arial", "sans-serif"];
-const headerFontFamily = ["\"Karla\"", ...bodyFontFamily];
+export const bodyFontFamily = ["\"Rubik\"", "Roboto", "\"Helvetica\"", "Arial", "sans-serif"];
+export const headerFontFamily = ["\"Karla\"", ...bodyFontFamily];
 
 const theme = createMuiTheme({
     typography: {

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@reach/router";
 import { Card, CardMedia, Button, CardContent, Typography, CardActions } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import trackPlaceholder from "../assets/track_placeholder.png";
+import trackPlaceholder from "../../assets/track_placeholder.png";
 
 import PropTypes from "prop-types";
 

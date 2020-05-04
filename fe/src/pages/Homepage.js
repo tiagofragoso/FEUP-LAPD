@@ -4,10 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 import { search } from "../services/searchService";
-import SearchResult from "../components/SearchResult";
+import SearchBar from "../components/homepage/SearchBar";
+import SearchResult from "../components/homepage/SearchResult";
 import PageLayout from "../components/PageLayout";
-import SearchBar from "../components/SearchBar";
 import smoothScrollToRef from "../utils/smoothScroll";
+import CustomTabs from "../components/CustomTabs";
 
 import blob from "../assets/blob.svg";
 import logoWhite from "../assets/logo_white.svg";
@@ -79,18 +80,22 @@ const HomePage = ({ location }) => {
                 { !loading && !error && results &&
                     <>
                         <h2>Searched for {searchQuery}</h2>
-                        <h3>Tracks</h3>
-                        {
-                            results.tracks.items.map((item) => <SearchResult key={item.id} item={item} type="track" />)
-                        }
-                        <h3>Artists</h3>
-                        {
-                            results.artists.items.map((item) => <SearchResult key={item.id} item={item} type="artist" />)
-                        }
-                        <h3>Albums</h3>
-                        {
-                            results.albums.items.map((item) => <SearchResult key={item.id} item={item} type="album" />)
-                        }
+                        <CustomTabs
+                            tabs={[
+                                {
+                                    label: "Albums",
+                                    items: results.albums.items.map((item) => <SearchResult key={item.id} item={item} type="album" />),
+                                },
+                                {
+                                    label: "Artists",
+                                    items: results.artists.items.map((item) => <SearchResult key={item.id} item={item} type="artist" />),
+                                },
+                                {
+                                    label: "Tracks",
+                                    items: results.tracks.items.map((item) => <SearchResult key={item.id} item={item} type="track" />),
+                                },
+                            ]}
+                        />
                     </>
                 }
             </PageLayout>

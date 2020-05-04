@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         padding: theme.spacing(3, 0),
-        width: "50%",
+        width: "70%",
     },
 }));
 
