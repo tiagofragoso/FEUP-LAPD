@@ -1,11 +1,11 @@
 import React, { useRef, useCallback, useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Box, Button, Typography } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 import { search } from "../services/searchService";
 import SearchBar from "../components/homepage/SearchBar";
-import SearchResult from "../components/homepage/SearchResult";
+import SearchResultsGrid from "../components/homepage/SearchResultsGrid";
 import PageLayout from "../components/PageLayout";
 import smoothScrollToRef from "../utils/smoothScroll";
 import CustomTabs from "../components/CustomTabs";
@@ -39,6 +39,7 @@ const HomePage = ({ location }) => {
     const { results, loading, error } = useSelector((state) => state.search);
     const classes = useStyles();
     const resultsRef = useRef(null);
+    const topRef = useRef(null);
     const dispatch = useDispatch();
     const [searchQuery, setSearchQuery] = useState(null);
 
@@ -57,6 +58,10 @@ const HomePage = ({ location }) => {
         smoothScrollToRef(resultsRef);
     };
 
+    const scrollToTop = () => {
+        smoothScrollToRef(topRef);
+    };
+
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         if (params.has("q")) {
@@ -66,7 +71,7 @@ const HomePage = ({ location }) => {
 
     return (
         <>
-            <div className={classes.splash}>
+            <div className={classes.splash} ref={topRef}>
                 <div className={classes.blob}>
                     <img alt="white logo" src={logoWhite} className={classes.logo}/>
                     <SearchBar searchQuery={searchQuery} submitSearch={submitSearch} />
@@ -79,23 +84,29 @@ const HomePage = ({ location }) => {
                 { error && <p>Error: {error.toString()}</p> }
                 { !loading && !error && results &&
                     <>
-                        <h2>Searched for {searchQuery}</h2>
+                        <Box mb={5}>
+                            <Typography variant="h4" component="h4">Showing results for <strong>{searchQuery}</strong></Typography>
+                        </Box>
                         <CustomTabs
                             tabs={[
                                 {
                                     label: "Albums",
-                                    items: results.albums.items.map((item) => <SearchResult key={item.id} item={item} type="album" />),
+                                    items: <SearchResultsGrid items={results.albums.items} type="album" />,
                                 },
                                 {
                                     label: "Artists",
-                                    items: results.artists.items.map((item) => <SearchResult key={item.id} item={item} type="artist" />),
+                                    items: <SearchResultsGrid items={results.artists.items} type="artist" />,
                                 },
                                 {
                                     label: "Tracks",
-                                    items: results.tracks.items.map((item) => <SearchResult key={item.id} item={item} type="track" />),
+                                    items: <SearchResultsGrid items={results.tracks.items} type="track" />,
                                 },
                             ]}
                         />
+                        <Typography variant="body2">
+                            Haven&apos;t found what you were looking for?
+                            <Button onClick={scrollToTop} size="small">Search again</Button>
+                        </Typography>
                     </>
                 }
             </PageLayout>

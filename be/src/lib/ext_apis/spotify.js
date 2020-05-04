@@ -77,7 +77,7 @@ const search = (query) => request(
         params: {
             "q": query,
             "type": "album,artist,track",
-            "limit": "5",
+            "limit": "9",
         },
     },
 );

@@ -32,6 +32,9 @@ export const CustomTabs = ({ tabs }) => {
                     backgroundImage: "linear-gradient(90deg, #FF7BAC 0%, #F7931E 100%)",
                     backgroundSize: "100%",
                     backgroundClip: "text",
+                    MozBackgroundClip: "text",
+                    WebkitBackgroundClip: "text",
+                    "text-fill-color": "transparent",
                     WebkitTextFillColor: "transparent",
                 },
             },
@@ -42,11 +45,19 @@ export const CustomTabs = ({ tabs }) => {
     const TabPanel = ({ index, children }) =>
         <div role="tabpanel" hidden={selectedTab !== index}>
             {selectedTab === index && (
-                <Box p={3}>
+                <Box py={8}>
                     {children}
                 </Box>
             )}
         </div>;
+
+    TabPanel.propTypes = {
+        index: PropTypes.number.isRequired,
+        children: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.node),
+            PropTypes.node,
+        ]).isRequired,
+    };
 
     return (
         <>
