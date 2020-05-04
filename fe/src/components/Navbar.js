@@ -61,7 +61,9 @@ export const Navbar = () => {
     const { register, handleSubmit } = useForm();
 
     const submitSearch = (data) => {
-        navigate("/", { state: data }); // maybe we want this in query params
+        if (data.q.trim() !== "") {
+            navigate(`/?q=${data.q}`);
+        }
     };
 
     return (

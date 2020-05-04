@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import { makeStyles, InputBase, Checkbox, FormControlLabel } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-
-import { search } from "../services/searchService";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
     searchBar: {
@@ -64,19 +62,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const SearchBar = ({ resultsScroll }) => {
+export const SearchBar = ({ searchQuery, submitSearch }) => {
     const classes = useStyles();
 
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, setValue } = useForm();
 
-    const dispatch = useDispatch();
-
-    const submitSearch = (data) => {
-        if (data.q.trim() !== "") {
-            dispatch(search(data));
-            resultsScroll();
+    useEffect(() => {
+        if (searchQuery) {
+            setValue("q", searchQuery);
         }
-    };
+    }, [searchQuery, setValue]);
 
     return (
         <form noValidate autoComplete="off" onSubmit={handleSubmit(submitSearch)} className={classes.searchBar}>
@@ -118,6 +113,11 @@ export const SearchBar = ({ resultsScroll }) => {
             </div>
         </form>
     );
+};
+
+SearchBar.propTypes = {
+    searchQuery: PropTypes.string,
+    submitSearch: PropTypes.func.isRequired,
 };
 
 export default SearchBar;

@@ -1,7 +1,9 @@
-import React, { useRef } from "react";
+import React, { useRef, useCallback, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import PropTypes from "prop-types";
 
+import { search } from "../services/searchService";
 import SearchResult from "../components/SearchResult";
 import PageLayout from "../components/PageLayout";
 import SearchBar from "../components/SearchBar";
@@ -32,50 +34,73 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const HomePage = () => {
-
+const HomePage = ({ location }) => {
     const { results, loading, error } = useSelector((state) => state.search);
-
     const classes = useStyles();
-
     const resultsRef = useRef(null);
+    const dispatch = useDispatch();
+    const [searchQuery, setSearchQuery] = useState(null);
+
+    const submitSearch = useCallback(
+        (data) => {
+            if (data.q.trim() !== "") {
+                dispatch(search(data));
+                setSearchQuery(data.q);
+                scrollToResults();
+            }
+        },
+        [dispatch]
+    );
 
     const scrollToResults = () => {
         smoothScrollToRef(resultsRef);
     };
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        if (params.has("q")) {
+            submitSearch({ q: params.get("q") });
+        }
+    }, [location, submitSearch]);
 
     return (
         <>
             <div className={classes.splash}>
                 <div className={classes.blob}>
                     <img alt="white logo" src={logoWhite} className={classes.logo}/>
-                    <SearchBar resultsScroll={scrollToResults} />
+                    <SearchBar searchQuery={searchQuery} submitSearch={submitSearch} />
                 </div>
             </div>
             <div ref={resultsRef} />
+            { searchQuery &&
             <PageLayout>
                 { loading && <p>Loading</p> }
                 { error && <p>Error: {error.toString()}</p> }
                 { !loading && !error && results &&
                     <>
-                        <h2>Tracks</h2>
+                        <h2>Searched for {searchQuery}</h2>
+                        <h3>Tracks</h3>
                         {
                             results.tracks.items.map((item) => <SearchResult key={item.id} item={item} type="track" />)
                         }
-                        <h2>Artists</h2>
+                        <h3>Artists</h3>
                         {
                             results.artists.items.map((item) => <SearchResult key={item.id} item={item} type="artist" />)
                         }
-                        <h2>Albums</h2>
+                        <h3>Albums</h3>
                         {
                             results.albums.items.map((item) => <SearchResult key={item.id} item={item} type="album" />)
                         }
                     </>
                 }
             </PageLayout>
+            }
         </>
     );
+};
 
+HomePage.propTypes = {
+    location: PropTypes.object,
 };
 
 export default HomePage;
