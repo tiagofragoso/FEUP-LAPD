@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/styles";
 
 import PageLayout from "../components/PageLayout";
 import PageWithHeader from "../components/PageWithHeader";
+import PageSection from "../components/PageSection";
 
 const useStyles = makeStyles((theme) => ({
     lyrics: {
@@ -36,8 +37,10 @@ export const TrackPage = ({ id }) => {
                     subtitle={{ album: track.album.name, artists: track.artists.map((a) => a.name) }}
                     popularity={track.popularity}
                 >
-                    {track.lyrics && <pre className={classes.lyrics}>{track.lyrics}</pre>}
-                    {!track.lyrics && <p>Lyrics not found</p>}
+                    <PageSection title="lyrics">
+                        {track.lyrics && <pre className={classes.lyrics}>{track.lyrics}</pre>}
+                        {!track.lyrics && <p>Lyrics not found</p>}
+                    </PageSection>
                 </PageWithHeader>
                 }
             </>
