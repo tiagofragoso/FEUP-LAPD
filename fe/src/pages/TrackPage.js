@@ -24,6 +24,11 @@ export const TrackPage = ({ id }) => {
 
     const classes = useStyles();
 
+    const player = (url) =>
+        <audio controls src={url}>
+            Your browser does not support the <code>audio</code> element.
+        </audio>;
+
     return (
         <PageLayout>
             <>
@@ -36,6 +41,7 @@ export const TrackPage = ({ id }) => {
                     supertitle="EP • 2016"
                     subtitle={{ album: track.album.name, artists: track.artists.map((a) => a.name) }}
                     popularity={track.popularity}
+                    component={ track.preview_url ? player(track.preview_url) : null}
                 >
                     <PageSection title="lyrics">
                         {track.lyrics && <pre className={classes.lyrics}>{track.lyrics}</pre>}

@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 //     return ratios;
 // };
 
-const Header = ({ image, supertitle, title, subtitle, popularity }) => {
+const Header = ({ image, supertitle, title, subtitle, popularity, component }) => {
     const classes = useStyles();
 
     const renderSubtitle = ({ album, artists }) => (
@@ -115,9 +115,11 @@ const Header = ({ image, supertitle, title, subtitle, popularity }) => {
                     </Grid>
                 </Box>
             </Grid>
-            <Grid item xs={12} sm={4} lg={2}>
-                Player/Genre
-            </Grid>
+            {component &&
+                <Grid item xs={12} sm={4} lg={2}>
+                    { component }
+                </Grid>
+            }
             <Grid item xs={12} sm={8} lg={10} />
         </Grid>
     );
