@@ -5,6 +5,7 @@ import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 import PageLayout from "../components/PageLayout";
+import PageWithHeader from "../components/PageWithHeader";
 
 const useStyles = makeStyles((theme) => ({
     lyrics: {
@@ -24,22 +25,22 @@ export const TrackPage = ({ id }) => {
 
     return (
         <PageLayout>
-            <div>
+            <>
                 { loading && <p>Loading</p> }
                 { error && <p>Error: {error.toString()}</p> }
                 { !loading && !error && track  &&
-                <>
-                    <Typography component="h3" variant="h3">
-                        {track.name}
-                    </Typography>
-                    <Typography component="h5" variant="h5">
-                        {track.artists.map((a) => a.name).toString()}
-                    </Typography>
+                <PageWithHeader
+                    image={track.album.images[0].url}
+                    title={track.name}
+                    supertitle="EP • 2016"
+                    subtitle={{ album: track.album.name, artists: track.artists.map((a) => a.name) }}
+                    popularity={track.popularity}
+                >
                     {track.lyrics && <pre className={classes.lyrics}>{track.lyrics}</pre>}
                     {!track.lyrics && <p>Lyrics not found</p>}
-                </>
+                </PageWithHeader>
                 }
-            </div>
+            </>
         </PageLayout>
     );
 };
