@@ -89,10 +89,10 @@ const Header = ({ image, supertitle, title, subtitle, popularity, component }) =
     return (
         <Grid container alignItems="stretch">
             <Grid item xs={12} sm={4} lg={2} className={classes.photo}>
-                <img src={image} alt="photo" width="80%" />
+                <img src={image} alt="photo" width="100%" />
             </Grid>
             <Grid item xs={12} sm={8} lg={10}>
-                <Box className={classes.headerDetails} py={1}>
+                <Box className={classes.headerDetails} px={2} py={1}>
                     <Grid container className={classes.headerDetails}>
                         {supertitle &&
                         <Grid item xs={12}>

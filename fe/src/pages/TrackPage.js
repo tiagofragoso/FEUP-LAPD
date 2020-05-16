@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTrack } from "../services/trackService";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 import PageLayout from "../components/PageLayout";
 import PageWithHeader from "../components/PageWithHeader";
 import PageSection from "../components/PageSection";
+import AudioPlayer from "../components/AudioPlayer";
 
 const useStyles = makeStyles((theme) => ({
     lyrics: {
@@ -24,11 +24,6 @@ export const TrackPage = ({ id }) => {
 
     const classes = useStyles();
 
-    const player = (url) =>
-        <audio controls src={url}>
-            Your browser does not support the <code>audio</code> element.
-        </audio>;
-
     return (
         <PageLayout>
             <>
@@ -41,7 +36,7 @@ export const TrackPage = ({ id }) => {
                     supertitle="EP • 2016"
                     subtitle={{ album: track.album.name, artists: track.artists.map((a) => a.name) }}
                     popularity={track.popularity}
-                    component={ track.preview_url ? player(track.preview_url) : null}
+                    component={ track.preview_url ? <AudioPlayer url={track.preview_url} /> : null}
                 >
                     <PageSection title="lyrics">
                         {track.lyrics && <pre className={classes.lyrics}>{track.lyrics}</pre>}
