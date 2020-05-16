@@ -1,5 +1,6 @@
-import React from "react";
-import { makeStyles, Box, Grid, Typography } from "@material-ui/core";
+import React, { useEffect } from "react";
+import { makeStyles, Box, Grid, Typography, Link, Icon } from "@material-ui/core";
+import { loadCSS } from "fg-loadcss";
 
 // import fireIcon from "../assets/fire.svg";
 // import fireFadeIcon from "../assets/fire_fade.svg";
@@ -8,6 +9,15 @@ const useStyles = makeStyles((theme) => ({
     photo: {
         "& img": {
             borderRadius: theme.shape.borderRadius,
+        },
+    },
+    title: {
+        fontWeight: theme.typography.fontWeightBold,
+    },
+    titleLink: {
+        marginLeft: theme.spacing(1),
+        "& > span": {
+            color: theme.palette.text.primary,
         },
     },
     headerDetails: {
@@ -46,8 +56,19 @@ const useStyles = makeStyles((theme) => ({
 //     return ratios;
 // };
 
-const Header = ({ image, supertitle, title, subtitle, popularity, component }) => {
+const Header = ({ image, supertitle, title, titleUrl, subtitle, popularity, component }) => {
     const classes = useStyles();
+
+    React.useEffect(() => {
+        const node = loadCSS(
+            "https://use.fontawesome.com/releases/v5.12.0/css/all.css",
+            document.querySelector("#font-awesome-css"),
+        );
+
+        return () => {
+            node.parentNode.removeChild(node);
+        };
+    }, []);
 
     const renderSubtitle = ({ album, artists }) => (
         <>
@@ -55,7 +76,7 @@ const Header = ({ image, supertitle, title, subtitle, popularity, component }) =
             <Typography variant="h6" component="span" display="block">{album}</Typography>
             }
             {artists &&
-            <Typography variant="h6" component="span" display="block">by <strong>{artists.join(",")}</strong></Typography>
+            <Typography variant="h6" component="span" display="block">by <strong>{artists.join(", ")}</strong></Typography>
             }
         </>
     );
@@ -100,7 +121,12 @@ const Header = ({ image, supertitle, title, subtitle, popularity, component }) =
                         </Grid>
                         }
                         <Grid item xs={12}>
-                            <Typography variant="h4" component="h4">{title}</Typography>
+                            <Typography className={classes.title} variant="h4" component="span">{title}</Typography>
+                            {titleUrl &&
+                                <Link className={classes.titleLink} href={titleUrl} target="_blank" rel="noopener">
+                                    <Icon className="fab fa-spotify"/>
+                                </Link>
+                            }
                         </Grid>
                         {subtitle &&
                         <Grid item xs={12}>
@@ -117,7 +143,9 @@ const Header = ({ image, supertitle, title, subtitle, popularity, component }) =
             </Grid>
             {component &&
                 <Grid item xs={12} sm={4} lg={2}>
-                    { component }
+                    <Box py={1}>
+                        { component }
+                    </Box>
                 </Grid>
             }
             <Grid item xs={12} sm={8} lg={10} />
@@ -128,7 +156,9 @@ const Header = ({ image, supertitle, title, subtitle, popularity, component }) =
 export const PageWithHeader = (props) => (
     <>
         <Header {...props} />
-        {props.children}
+        <Box py={2}>
+            {props.children}
+        </Box>
     </>
 );
 

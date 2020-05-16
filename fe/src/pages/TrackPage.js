@@ -33,6 +33,7 @@ export const TrackPage = ({ id }) => {
                 <PageWithHeader
                     image={track.album.images[0].url}
                     title={track.name}
+                    titleUrl={track.external_urls.spotify}
                     supertitle="EP • 2016"
                     subtitle={{ album: track.album.name, artists: track.artists.map((a) => a.name) }}
                     popularity={track.popularity}
