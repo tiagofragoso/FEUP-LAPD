@@ -35,7 +35,10 @@ export const TrackPage = ({ id }) => {
                     title={track.name}
                     titleUrl={track.external_urls.spotify}
                     supertitle="EP • 2016"
-                    subtitle={{ album: track.album.name, artists: track.artists.map((a) => a.name) }}
+                    subtitle={{ album: track.album.name, artists: track.artists.map((a) => ({
+                        id: a.id,
+                        name: a.name,
+                    })) }}
                     popularity={track.popularity}
                     component={ track.preview_url ? <AudioPlayer url={track.preview_url} /> : null}
                 >

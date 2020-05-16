@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { makeStyles, Box, Grid, Typography, Link, Icon } from "@material-ui/core";
+import { Link as RouterLink } from "@reach/router";
 import { loadCSS } from "fg-loadcss";
 
 // import fireIcon from "../assets/fire.svg";
@@ -76,7 +77,15 @@ const Header = ({ image, supertitle, title, titleUrl, subtitle, popularity, comp
             <Typography variant="h6" component="span" display="block">{album}</Typography>
             }
             {artists &&
-            <Typography variant="h6" component="span" display="block">by <strong>{artists.join(", ")}</strong></Typography>
+            <Typography variant="h6" component="span" display="block">by {
+                artists.map(({ id, name }, index) => (
+                    <>
+                        <RouterLink key={id} to={`/artists/${id}`}>{name}</RouterLink>
+                        {index !== artists.length - 1 ? ", " : null}
+                    </>
+                ))
+            }
+            </Typography>
             }
         </>
     );

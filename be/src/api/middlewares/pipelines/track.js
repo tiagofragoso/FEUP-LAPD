@@ -15,7 +15,7 @@ const track_pipeline = async ({ params }, res) => {
     const artist = spotify_res.artists[0].name; // Investigate how Spotify sorts artists
 
     const lyrics_res = await get_lyrics(artist, track);
-    res.status(200).send({ ...spotify_res, lyrics: lyrics_res.lyrics });
+    res.status(200).send({ ...spotify_res, lyrics: lyrics_res });
 
 };
 

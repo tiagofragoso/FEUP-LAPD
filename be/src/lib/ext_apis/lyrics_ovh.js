@@ -10,7 +10,7 @@ const get_lyrics = async (artist, track) => {
     const normalized_track = normalize_string(track);
     try {
         const res = await axios.get(`${API_URL}/${normalized_artist}/${normalized_track}`);
-        return res.data;
+        return res.data.lyrics;
     } catch (err) {
         console.error("Error fetching lyrics from lyrics.ovh: ", err);
         return null;
