@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { makeStyles, Box, Grid, Typography, Link, Icon } from "@material-ui/core";
-import { Link as RouterLink } from "@reach/router";
 import { loadCSS } from "fg-loadcss";
+import PropTypes from "prop-types";
 
 // import fireIcon from "../assets/fire.svg";
 // import fireFadeIcon from "../assets/fire_fade.svg";
@@ -17,9 +17,6 @@ const useStyles = makeStyles((theme) => ({
     },
     titleLink: {
         marginLeft: theme.spacing(1),
-        "& > span": {
-            color: theme.palette.text.primary,
-        },
     },
     headerDetails: {
         height: "100%",
@@ -45,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
         zIndex: 0,
     },
+    link: {
+        textDecoration: "none",
+    },
 }));
 
 // const calculatePopularityRatios = (value, max, divisions) => {
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 const Header = ({ image, supertitle, title, titleUrl, subtitle, popularity, component }) => {
     const classes = useStyles();
 
-    React.useEffect(() => {
+    useEffect(() => {
         const node = loadCSS(
             "https://use.fontawesome.com/releases/v5.12.0/css/all.css",
             document.querySelector("#font-awesome-css"),
@@ -70,25 +70,6 @@ const Header = ({ image, supertitle, title, titleUrl, subtitle, popularity, comp
             node.parentNode.removeChild(node);
         };
     }, []);
-
-    const renderSubtitle = ({ album, artists }) => (
-        <>
-            {album &&
-            <Typography variant="h6" component="span" display="block">{album}</Typography>
-            }
-            {artists &&
-            <Typography variant="h6" component="span" display="block">by {
-                artists.map(({ id, name }, index) => (
-                    <>
-                        <RouterLink key={id} to={`/artists/${id}`}>{name}</RouterLink>
-                        {index !== artists.length - 1 ? ", " : null}
-                    </>
-                ))
-            }
-            </Typography>
-            }
-        </>
-    );
 
     const renderPopularity = (popularity) =>
     // const ratios = calculatePopularityRatios(popularity, 100, 5);
@@ -118,10 +99,10 @@ const Header = ({ image, supertitle, title, titleUrl, subtitle, popularity, comp
 
     return (
         <Grid container alignItems="stretch">
-            <Grid item xs={12} sm={4} lg={2} className={classes.photo}>
-                <img src={image} alt="photo" width="100%" />
+            <Grid item xs={12} sm={4} md={3} lg={2} className={classes.photo}>
+                <img src={image} alt={title} width="100%" />
             </Grid>
-            <Grid item xs={12} sm={8} lg={10}>
+            <Grid item xs={12} sm={8} md={9} lg={10}>
                 <Box className={classes.headerDetails} px={2} py={1}>
                     <Grid container className={classes.headerDetails}>
                         {supertitle &&
@@ -133,13 +114,13 @@ const Header = ({ image, supertitle, title, titleUrl, subtitle, popularity, comp
                             <Typography className={classes.title} variant="h4" component="span">{title}</Typography>
                             {titleUrl &&
                                 <Link className={classes.titleLink} href={titleUrl} target="_blank" rel="noopener">
-                                    <Icon className="fab fa-spotify"/>
+                                    <Icon color="primary" className="fab fa-spotify"/>
                                 </Link>
                             }
                         </Grid>
                         {subtitle &&
                         <Grid item xs={12}>
-                            {renderSubtitle(subtitle)}
+                            {subtitle}
                         </Grid>
                         }
                         {popularity &&
@@ -157,7 +138,6 @@ const Header = ({ image, supertitle, title, titleUrl, subtitle, popularity, comp
                     </Box>
                 </Grid>
             }
-            <Grid item xs={12} sm={8} lg={10} />
         </Grid>
     );
 };
@@ -170,5 +150,22 @@ export const PageWithHeader = (props) => (
         </Box>
     </>
 );
+
+Header.propTypes = {
+    image: PropTypes.string.isRequired,
+    supertitle: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    titleUrl: PropTypes.string.isRequired,
+    subtitle: PropTypes.node.isRequired,
+    popularity: PropTypes.number.isRequired,
+    component: PropTypes.node,
+};
+
+PageWithHeader.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+    ]).isRequired,
+};
 
 export default PageWithHeader;

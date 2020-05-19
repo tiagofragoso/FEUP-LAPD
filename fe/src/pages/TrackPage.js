@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTrack } from "../services/trackService";
 import { makeStyles } from "@material-ui/styles";
+import { Link, Typography } from "@material-ui/core";
+import { Link as RouterLink } from "@reach/router";
+import PropTypes from "prop-types";
 
 import PageLayout from "../components/PageLayout";
 import PageWithHeader from "../components/PageWithHeader";
@@ -13,6 +16,27 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: theme.typography.fontFamily,
     },
 }));
+
+const albumAndArtists = ({ album, artists }) => (
+    <>
+        <Link to={`/albums/${album.id}`} underline="none" component={RouterLink}>
+            <Typography variant="h6" component="span" display="block">{album.name}</Typography>
+        </Link>
+        <Typography variant="h6" component="span">by </Typography>
+        {
+            artists.map(({ id, name }, index) => (
+                <React.Fragment key={id}>
+                    <Link to={`/artists/${id}`} underline="none" component={RouterLink}>
+                        <Typography variant="h6" component="span">
+                            {name}
+                        </Typography>
+                    </Link>
+                    {index !== artists.length - 1 ? ", " : null}
+                </React.Fragment>
+            ))
+        }
+    </>
+);
 
 export const TrackPage = ({ id }) => {
 
@@ -34,11 +58,7 @@ export const TrackPage = ({ id }) => {
                     image={track.album.images[0].url}
                     title={track.name}
                     titleUrl={track.external_urls.spotify}
-                    supertitle="EP • 2016"
-                    subtitle={{ album: track.album.name, artists: track.artists.map((a) => ({
-                        id: a.id,
-                        name: a.name,
-                    })) }}
+                    subtitle={albumAndArtists(track)}
                     popularity={track.popularity}
                     component={ track.preview_url ? <AudioPlayer url={track.preview_url} /> : null}
                 >
@@ -51,6 +71,15 @@ export const TrackPage = ({ id }) => {
             </>
         </PageLayout>
     );
+};
+
+albumAndArtists.propTypes = {
+    album: PropTypes.object.isRequired,
+    artists: PropTypes.array.isRequired,
+};
+
+TrackPage.propTypes = {
+    id: PropTypes.string.isRequired,
 };
 
 export default TrackPage;
