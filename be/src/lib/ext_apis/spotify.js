@@ -71,12 +71,12 @@ const request = async (url, options = {}) => {
     }
 };
 
-const search = (query) => request(
+const search = ({ q, type }) => request(
     `${API_URL}/search`,
     {
         params: {
-            "q": query,
-            "type": "album,artist,track",
+            q,
+            type,
             "limit": "9",
         },
     },

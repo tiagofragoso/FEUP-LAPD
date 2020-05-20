@@ -45,7 +45,7 @@ const HomePage = ({ location }) => {
 
     const submitSearch = useCallback(
         (data) => {
-            if (data.q.trim() !== "") {
+            if (data.q.trim() !== "" && data.type.trim() !== "") {
                 dispatch(search(data));
                 setSearchQuery(data.q);
                 setTimeout(() => {
@@ -57,7 +57,6 @@ const HomePage = ({ location }) => {
     );
 
     const scrollToResults = () => {
-        console.log("called");
         smoothScrollToRef(resultsRef);
     };
 
@@ -91,20 +90,15 @@ const HomePage = ({ location }) => {
                             <Typography variant="h4" component="h4">Showing results for <strong>{searchQuery}</strong></Typography>
                         </Box>
                         <CustomTabs
-                            tabs={[
-                                {
-                                    label: "Albums",
-                                    items: <SearchResultsGrid items={results.albums.items} type="album" />,
-                                },
-                                {
-                                    label: "Artists",
-                                    items: <SearchResultsGrid items={results.artists.items} type="artist" />,
-                                },
-                                {
-                                    label: "Tracks",
-                                    items: <SearchResultsGrid items={results.tracks.items} type="track" />,
-                                },
-                            ]}
+                            tabs={
+                                Object.keys(results).map((key) => {
+                                    const { items } = results[key];
+                                    return {
+                                        label: key,
+                                        items: <SearchResultsGrid items={items} type={key.slice(0, -1)} />,
+                                    };
+                                })
+                            }
                         />
                         <Typography variant="body2">
                             Haven&apos;t found what you were looking for?

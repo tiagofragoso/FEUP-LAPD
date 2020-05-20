@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { makeStyles, InputBase, Checkbox, FormControlLabel } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
@@ -66,6 +66,17 @@ export const SearchBar = ({ searchQuery, submitSearch }) => {
     const classes = useStyles();
 
     const { register, handleSubmit, setValue } = useForm();
+    const [types, setTypes] = useState({
+        albums: true,
+        artists: true,
+        tracks: true,
+    });
+
+    const handleChange = (event) => {
+        setTypes({ ...types, [event.target.name]: event.target.checked });
+    };
+
+    const { albums, artists, tracks } = types;
 
     useEffect(() => {
         if (searchQuery) {
@@ -73,8 +84,16 @@ export const SearchBar = ({ searchQuery, submitSearch }) => {
         }
     }, [searchQuery, setValue]);
 
+    const processSubmit = (data) => submitSearch({
+        q: data.q,
+        type: ["albums", "artists", "tracks"]
+            .filter((v) => data[v])
+            .map((v) => v.slice(0, -1))
+            .join(","),
+    });
+
     return (
-        <form noValidate autoComplete="off" onSubmit={handleSubmit(submitSearch)} className={classes.searchBar}>
+        <form noValidate autoComplete="off" onSubmit={handleSubmit(processSubmit)} className={classes.searchBar}>
             <div className={classes.search}>
                 <InputBase
                     inputRef={register}
@@ -86,27 +105,30 @@ export const SearchBar = ({ searchQuery, submitSearch }) => {
                     }}
                     inputProps={{ "aria-label": "search" }}
                 />
-                <div className={classes.searchIcon} onClick={handleSubmit(submitSearch)}>
+                <div className={classes.searchIcon} onClick={handleSubmit(processSubmit)}>
                     <SearchIcon color="inherit"/>
                 </div>
             </div>
 
             <div className={classes.filters}>
                 <FormControlLabel
-                    value="albums"
-                    control={<Checkbox color="primary" />}
+                    name="albums"
+                    control={<Checkbox color="primary" checked={albums} onChange={handleChange}/>}
+                    inputRef={register}
                     label="Albums"
                     labelPlacement="start"
                 />
                 <FormControlLabel
-                    value="artists"
-                    control={<Checkbox color="primary" />}
+                    name="artists"
+                    control={<Checkbox color="primary" checked={artists} onChange={handleChange}/>}
+                    inputRef={register}
                     label="Artists"
                     labelPlacement="start"
                 />
                 <FormControlLabel
-                    value="tracks"
-                    control={<Checkbox color="primary" />}
+                    name="tracks"
+                    control={<Checkbox color="primary" checked={tracks} onChange={handleChange}/>}
+                    inputRef={register}
                     label="Tracks"
                     labelPlacement="start"
                 />
