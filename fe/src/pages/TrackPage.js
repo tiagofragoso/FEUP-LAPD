@@ -10,6 +10,7 @@ import PageLayout from "../components/PageLayout";
 import PageWithHeader from "../components/PageWithHeader";
 import PageSection from "../components/PageSection";
 import AudioPlayer from "../components/AudioPlayer";
+import ArtistList from "../components/ArtistList";
 
 const useStyles = makeStyles((theme) => ({
     lyrics: {
@@ -19,22 +20,11 @@ const useStyles = makeStyles((theme) => ({
 
 const albumAndArtists = ({ album, artists }) => (
     <>
-        <Link to={`/albums/${album.id}`} underline="none" component={RouterLink}>
+        <Link to={`/albums/${album.id}`} color="inherit" underline="none" component={RouterLink}>
             <Typography variant="h6" component="span" display="block">{album.name}</Typography>
         </Link>
         <Typography variant="h6" component="span">by </Typography>
-        {
-            artists.map(({ id, name }, index) => (
-                <React.Fragment key={id}>
-                    <Link to={`/artists/${id}`} underline="none" component={RouterLink}>
-                        <Typography variant="h6" component="span">
-                            {name}
-                        </Typography>
-                    </Link>
-                    {index !== artists.length - 1 ? ", " : null}
-                </React.Fragment>
-            ))
-        }
+        <ArtistList artists={artists} variant="h6" />
     </>
 );
 
