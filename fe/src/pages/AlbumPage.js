@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "center",
     },
+    trackCard: {
+        marginBottom: theme.spacing(2),
+    },
     readMoreBtn: {
         marginTop: theme.spacing(3),
         padding: theme.spacing(1, 2),
@@ -58,7 +61,11 @@ export const AlbumPage = ({ id }) => {
                     supertitle={`${album.album_type} • ${album.release_date}`}
                 >
                     <PageSection title="tracks">
-                        { album.tracks.items.map((t, i) => <TrackCard key={i} track={t} />) }
+                        { album.tracks.items.map((t, i) =>
+                            <div key={i} className={classes.trackCard}>
+                                <TrackCard track={t} />
+                            </div>)
+                        }
                     </PageSection>
 
                     { album.description &&
