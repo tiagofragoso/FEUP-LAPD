@@ -3,3 +3,5 @@ export const secondsToMinutesSeconds = (s) => {
     const seconds = new Intl.NumberFormat("pt-PT", { minimumIntegerDigits: 2 }).format(Math.floor(s - (minutes * 60)));
     return `${minutes}:${seconds}`;
 };
+
+export const msToMinutesSeconds = (s) => secondsToMinutesSeconds(s / 1000);

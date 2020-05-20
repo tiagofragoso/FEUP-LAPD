@@ -78,8 +78,4 @@ albumAndArtists.propTypes = {
     artists: PropTypes.array.isRequired,
 };
 
-TrackPage.propTypes = {
-    id: PropTypes.string.isRequired,
-};
-
 export default TrackPage;
