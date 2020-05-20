@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAlbum } from "../services/albumService";
-import { Button, Link, Icon, Typography } from "@material-ui/core";
+import { Button, Icon, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { Link as RouterLink } from "@reach/router";
 import PropTypes from "prop-types";
 
 import PageLayout from "../components/PageLayout";
@@ -62,8 +61,8 @@ export const AlbumPage = ({ id }) => {
                         { album.tracks.items.map((t, i) => <TrackCard key={i} track={t} />) }
                     </PageSection>
 
-                    <PageSection title="more about the album">
-                        { album.description ?
+                    { album.description &&
+                        <PageSection title="more about the album">
                             <>
                                 <Typography variant="body1">{album.description}</Typography>
                                 <div className={classes.center}>
@@ -80,10 +79,8 @@ export const AlbumPage = ({ id }) => {
                                     </Button>
                                 </div>
                             </>
-                            :
-                            <p>Description not found</p>
-                        }
-                    </PageSection>
+                        </PageSection>
+                    }
                 </PageWithHeader>
                 }
             </>

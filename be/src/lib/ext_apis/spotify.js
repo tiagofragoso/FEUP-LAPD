@@ -99,7 +99,11 @@ const lookup_artist = (id) => request(`${API_URL}/artists/${id}`);
 
 const lookup_artist_top_tracks = (id) => request(`${API_URL}/artists/${id}/top-tracks`);
 
-const lookup_artist_albums = (id) => request(`${API_URL}/artists/${id}/albums`);
+const lookup_artist_albums = (id) => request(`${API_URL}/artists/${id}/albums`, {
+    params: {
+        limit: 40,
+    },
+});
 
 module.exports = {
     search,

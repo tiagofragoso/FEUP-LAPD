@@ -1,13 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getArtist } from "../services/artistService";
-import { Typography } from "@material-ui/core";
+import { Button, Grid, Icon, Link, Typography, makeStyles } from "@material-ui/core";
+import { Link as RouterLink } from "@reach/router";
+
 import PageLayout from "../components/PageLayout";
+import PageWithHeader from "../components/PageWithHeader";
+import PageSection from "../components/PageSection";
+import TrackCard from "../components/albumpage/TrackCard";
+
+const useStyles = makeStyles((theme) => ({
+    albumCover: {
+        borderRadius: theme.shape.borderRadius,
+    },
+    loadMoreBtn: {
+        marginTop: theme.spacing(2),
+        padding: theme.spacing(1, 2),
+        backgroundColor: "#F3F3F3",
+    },
+    columnCenter: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+    },
+    readMoreBtn: {
+        marginTop: theme.spacing(3),
+        padding: theme.spacing(1, 2),
+        backgroundColor: "#F3F3F3",
+        "& .MuiIcon-root ": {
+            width: "auto",
+        },
+    },
+    center: {
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+    },
+}));
 
 export const ArtistPage = ({ id }) => {
+    const classes = useStyles();
 
     const dispatch = useDispatch();
     const { artist, loading, error } = useSelector((state) => state.artist);
+    const [expanded, setExpanded] = useState(false);
+    const [albumCount, setAlbumCount] = useState(8);
+
+    const loadMoreAlbums = () => {
+        setExpanded(true);
+        setAlbumCount(albumCount + 8);
+    };
+
     useEffect(() => {
         dispatch(getArtist(id));
     }, [dispatch, id]);
@@ -18,39 +61,102 @@ export const ArtistPage = ({ id }) => {
                 { loading && <p>Loading</p> }
                 { error && <p>Error: {error.toString()}</p> }
                 { !loading && !error && artist  &&
-                <>
-                    <Typography component="h3" variant="h3">
-                        {artist.name}
-                    </Typography>
-                    <Typography component="h5" variant="h5">
-                        <strong>{artist.followers.total}</strong> followers
-                    </Typography>
-                    <p>Popularity {artist.popularity}</p>
-                    <p>{artist.genres.join(",")}</p>
-                    <Typography component="h4" variant="h4">
-                        Top Tracks
-                    </Typography>
-                    {
-                        artist.top_tracks && artist.top_tracks.tracks.map((t, i) =>
-                            <p key={i}>{t.name}</p>
-                        )
+                <PageWithHeader
+                    image={artist.images[0].url}
+                    title={artist.name}
+                    titleUrl={artist.external_urls.spotify}
+                    subtitle={
+                        <Typography variant="h6" component="span">
+                            <strong>{artist.followers.total}</strong> followers
+                        </Typography>
                     }
-                    <Typography component="h4" variant="h4">
-                        Albums
-                    </Typography>
-                    {
-                        artist.albums && artist.albums.items.map((a, i) =>
-                            <p key={i}>{a.name}</p>
-                        )
-                    }
-                    <Typography component="h4" variant="h4">
-                        Description
-                    </Typography>
-                    { artist.description ?
-                        <p>{artist.description}</p> :
-                        <p>Description not found</p>
-                    }
-                </>
+                    popularity={artist.popularity}
+                >
+                    <Grid container alignItems="stretch" spacing={2}>
+                        <Grid item xs={12} md={expanded ? 12 : 5}>
+                            <PageSection title="top tracks">
+                                <div className={classes.columnCenter}>
+                                    <Grid container alignItems="stretch" spacing={2} >
+                                        {
+                                            (expanded ?
+                                                artist.top_tracks.tracks :
+                                                artist.top_tracks.tracks.slice(0, 5)
+                                            ).map((t, i) =>
+                                                <Grid key={i} item xs={12} md={expanded ? 6 : 12}>
+                                                    <TrackCard track={t} collapsed />
+                                                </Grid>
+                                            )
+                                        }
+                                    </Grid>
+                                    {!expanded &&
+                                        <Button
+                                            size="large"
+                                            variant="contained"
+                                            disableElevation
+                                            disableRipple
+                                            className={classes.loadMoreBtn}
+                                            onClick={() => setExpanded(true)}
+                                        >
+                                            LOAD MORE TRACKS
+                                        </Button>
+                                    }
+                                </div>
+                            </PageSection>
+                        </Grid>
+                        <Grid item xs={12} md={expanded ? 12 : 7}>
+                            <PageSection title="albums">
+                                <div className={classes.columnCenter}>
+                                    <Grid container alignItems="stretch" spacing={2}>
+                                        {
+                                            artist.albums.items.slice(0, albumCount).map((a, i) =>
+                                                <Grid key={i} item xs={12} sm={6} md={4} lg={3}>
+                                                    <Link to={`/albums/${a.id}`} underline="none" component={RouterLink}>
+                                                        <img className={classes.albumCover} alt={a.name} src={a.images[0].url} width="100%" />
+                                                    </Link>
+                                                </Grid>
+                                            )
+                                        }
+                                    </Grid>
+                                    {
+                                        (albumCount <= artist.albums.items.length) &&
+                                        <Button
+                                            size="large"
+                                            variant="contained"
+                                            disableElevation
+                                            disableRipple
+                                            className={classes.loadMoreBtn}
+                                            onClick={loadMoreAlbums}
+                                        >
+                                            LOAD MORE ALBUMS
+                                        </Button>
+                                    }
+                                </div>
+                            </PageSection>
+                        </Grid>
+                        <Grid item xs={12}>
+                            { artist.description &&
+                            <PageSection title="more about the artist">
+                                <>
+                                    <Typography variant="body1">{artist.description}</Typography>
+                                    <div className={classes.center}>
+                                        <Button
+                                            size="large"
+                                            variant="contained"
+                                            disableElevation
+                                            disableRipple
+                                            className={classes.readMoreBtn}
+                                            endIcon={<Icon className="fab fa-wikipedia-w"/>}
+                                            href="https://wikipedia.org"
+                                        >
+                                            READ MORE ON
+                                        </Button>
+                                    </div>
+                                </>
+                            </PageSection>
+                            }
+                        </Grid>
+                    </Grid>
+                </PageWithHeader>
                 }
             </div>
         </PageLayout>

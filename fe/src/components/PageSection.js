@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     sectionTitle: {
         textTransform: "uppercase",
         fontWeight: theme.typography.fontWeightBold,
+        marginBottom: theme.spacing(2),
     },
 }));
 
