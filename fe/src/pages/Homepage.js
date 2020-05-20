@@ -48,13 +48,16 @@ const HomePage = ({ location }) => {
             if (data.q.trim() !== "") {
                 dispatch(search(data));
                 setSearchQuery(data.q);
-                scrollToResults();
+                setTimeout(() => {
+                    scrollToResults();
+                }, 500);
             }
         },
         [dispatch]
     );
 
     const scrollToResults = () => {
+        console.log("called");
         smoothScrollToRef(resultsRef);
     };
 
