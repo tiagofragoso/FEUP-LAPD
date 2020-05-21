@@ -70,7 +70,7 @@ export const Navbar = () => {
         <AppBar position="sticky" className={classes.navbar}>
             <Toolbar variant="dense" className={classes.toolbar}>
                 <div className={classes.left}>
-                    <Link to="/">
+                    <Link to="/about">
                         <img alt="logo" src={logo} height="30px" />
                     </Link>
                     <form className={classes.search} noValidate autoComplete="off" onSubmit={handleSubmit(submitSearch)}>
