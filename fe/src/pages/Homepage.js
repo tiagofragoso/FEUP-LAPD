@@ -67,7 +67,7 @@ const HomePage = ({ location }) => {
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         if (params.has("q")) {
-            submitSearch({ q: params.get("q") });
+            submitSearch({ q: params.get("q"), type: ["album", "artist", "track"].join(",") });
         }
     }, [location, submitSearch]);
 

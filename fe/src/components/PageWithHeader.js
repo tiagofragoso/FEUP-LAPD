@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     },
     titleLink: {
         marginLeft: theme.spacing(1),
+        color: theme.palette.text.primary,
     },
     headerDetails: {
         height: "100%",
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Header = ({ image, supertitle, title, titleUrl, subtitle, popularity, component }) => {
+const Header = ({ image, supertitle, title, titleUrl, subtitle, popularity, component, expandedComponent }) => {
     const classes = useStyles();
 
     useEffect(() => {
@@ -75,7 +76,7 @@ const Header = ({ image, supertitle, title, titleUrl, subtitle, popularity, comp
                             <Typography className={classes.title} variant="h4" component="span">{title}</Typography>
                             {titleUrl &&
                                 <Link className={classes.titleLink} href={titleUrl} target="_blank" rel="noopener">
-                                    <Icon color="primary" className="fab fa-spotify"/>
+                                    <Icon color="inherit" className="fab fa-spotify"/>
                                 </Link>
                             }
                         </Grid>
@@ -93,7 +94,7 @@ const Header = ({ image, supertitle, title, titleUrl, subtitle, popularity, comp
                 </Box>
             </Grid>
             {component &&
-                <Grid item xs={12} sm={4} lg={2}>
+                <Grid item xs={12} sm={expandedComponent ? 12 : 4} md={expandedComponent ? 12 : 3} lg={expandedComponent ? 12 : 2}>
                     <Box py={1}>
                         { component }
                     </Box>

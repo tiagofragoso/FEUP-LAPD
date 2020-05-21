@@ -8,6 +8,7 @@ import PageLayout from "../components/PageLayout";
 import PageWithHeader from "../components/PageWithHeader";
 import PageSection from "../components/PageSection";
 import TrackCard from "../components/albumpage/TrackCard";
+import GenreList from "../components/GenreList";
 
 const useStyles = makeStyles((theme) => ({
     albumCover: {
@@ -71,6 +72,8 @@ export const ArtistPage = ({ id }) => {
                         </Typography>
                     }
                     popularity={artist.popularity}
+                    component={<GenreList genres={artist.genres} />}
+                    expandedComponent
                 >
                     <Grid container alignItems="stretch" spacing={2}>
                         <Grid item xs={12} md={expanded ? 12 : 5}>

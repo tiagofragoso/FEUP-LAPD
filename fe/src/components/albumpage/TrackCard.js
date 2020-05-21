@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     trackLink: {
         display: "flex",
         alignItems: "center",
+        color: theme.palette.text.primary,
     },
     trackPopularityWrapper: {
         height: "20px",
@@ -74,7 +75,7 @@ export const TrackCard = ({ track, collapsed }) => {
                         {msToMinutesSeconds(track.duration_ms)}
                     </Typography>
                     <Link className={classes.trackLink} href={track.external_urls.spotify} target="_blank" rel="noopener">
-                        <Icon color="primary" className="fab fa-spotify"/>
+                        <Icon color="inherit" className="fab fa-spotify"/>
                     </Link>
                 </>
                 }

@@ -10,6 +10,7 @@ import PageWithHeader from "../components/PageWithHeader";
 import PageSection from "../components/PageSection";
 import TrackCard from "../components/albumpage/TrackCard";
 import ArtistList from "../components/ArtistList";
+import GenreList from "../components/GenreList";
 
 const useStyles = makeStyles((theme) => ({
     center: {
@@ -59,6 +60,8 @@ export const AlbumPage = ({ id }) => {
                     subtitle={artists(album)}
                     popularity={album.popularity}
                     supertitle={`${album.album_type} • ${album.release_date}`}
+                    component={<GenreList genres={album.genres} />}
+                    expandedComponent
                 >
                     <PageSection title="tracks">
                         { album.tracks.items.map((t, i) =>
