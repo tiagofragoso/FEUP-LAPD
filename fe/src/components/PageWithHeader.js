@@ -3,8 +3,8 @@ import { makeStyles, Box, Grid, Typography, Link, Icon } from "@material-ui/core
 import { loadCSS } from "fg-loadcss";
 import PropTypes from "prop-types";
 
-// import fireIcon from "../assets/fire.svg";
-// import fireFadeIcon from "../assets/fire_fade.svg";
+import PopularityIcon from "../components/PopularityIcon";
+import { calculatePopularityRatios } from "../utils/popularityRatios";
 
 const useStyles = makeStyles((theme) => ({
     photo: {
@@ -22,40 +22,19 @@ const useStyles = makeStyles((theme) => ({
         height: "100%",
         width: "100%",
     },
-    popularityIcon: {
-        background: "linear-gradient(180deg, #FF7BAC 0%, #F99826 100%)",
-    },
-    popularityWrapped: {
-        position: "relative",
-        height: "100%",
-    },
-    colored: {
-        position: "absolute",
-        zIndex: 5,
-        height: "40px",
-        "& div": {
-            overflow: "hidden",
-            display: "inline-block",
-        },
-    },
-    faded: {
-        position: "absolute",
-        zIndex: 0,
-    },
     link: {
         textDecoration: "none",
     },
+    popularityWrapper: {
+        width: "100%",
+        display: "flex",
+        height: "40px",
+        "& div": {
+            marginRight: theme.spacing(1),
+        },
+    },
 }));
 
-// const calculatePopularityRatios = (value, max, divisions) => {
-//     const ratios = [];
-//     const maxPerDivision = Math.floor(max / divisions);
-//     for (let i = 0; i < divisions; i++) {
-//         const v = value - (i * maxPerDivision);
-//         ratios.push(Math.floor((v > maxPerDivision ? maxPerDivision : Math.max(0, v)) / maxPerDivision * 100));
-//     }
-//     return ratios;
-// };
 
 const Header = ({ image, supertitle, title, titleUrl, subtitle, popularity, component }) => {
     const classes = useStyles();
@@ -72,30 +51,12 @@ const Header = ({ image, supertitle, title, titleUrl, subtitle, popularity, comp
     }, []);
 
     const renderPopularity = (popularity) =>
-    // const ratios = calculatePopularityRatios(popularity, 100, 5);
-
-    // return (
-    //     <div className={classes.popularityWrapped}>
-    //         <div className={classes.colored}>
-    //             {
-    //                 ratios.map((r, i) => (
-    //                     <div key={i} style={{ height: `${r}%` }}>
-    //                         <img src={fireIcon} height="40px" />
-    //                     </div>
-    //                 ))
-    //             }
-    //         </div>
-    //         <div className={classes.faded}>
-    //             <img src={fireFadeIcon} height="40px" />
-    //             <img src={fireFadeIcon} height="40px" />
-    //             <img src={fireFadeIcon} height="40px" />
-    //             <img src={fireFadeIcon} height="40px" />
-    //             <img src={fireFadeIcon} height="40px" />
-    //         </div>
-
-        //     </div>
-        // );
-        <Typography variant="h6" component="span" display="block">Popularity: {popularity}</Typography>;
+        <div className={classes.popularityWrapper}>
+            {
+                calculatePopularityRatios(popularity, 100, 5)
+                    .map((r, i) => <PopularityIcon key={i} ratio={r} />)
+            }
+        </div>;
 
     return (
         <Grid container alignItems="stretch">

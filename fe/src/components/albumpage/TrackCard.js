@@ -6,6 +6,8 @@ import PropTypes from "prop-types";
 
 import { msToMinutesSeconds } from "../../utils/dateUtils";
 import ArtistList from "../ArtistList";
+import { calculatePopularityRatios } from "../../utils/popularityRatios";
+import PopularityIcon from "../PopularityIcon";
 
 const useStyles = makeStyles((theme) => ({
     trackCardWrapper: {
@@ -38,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
     trackLink: {
         display: "flex",
         alignItems: "center",
+    },
+    trackPopularityWrapper: {
+        height: "20px",
     },
 }));
 
@@ -74,9 +79,11 @@ export const TrackCard = ({ track, collapsed }) => {
                 </>
                 }
                 {collapsed &&
-                    <Typography variant="body1" display="inline" className={classes.trackNumber}>
-                        {track.popularity}
-                    </Typography>
+                <div className={classes.trackPopularityWrapper}>
+                    {calculatePopularityRatios(track.popularity, 100, 1).map((r, i) =>
+                        <PopularityIcon ratio={r} key={i} size="small" background="dark" />
+                    )}
+                </div>
                 }
             </div>
         </div>
