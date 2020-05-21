@@ -29,7 +29,7 @@ export const AudioPlayer = ({ url }) => {
     const [playing, setPlaying] = useState(false);
     const [time, setTime] = useState(0);
     const [duration, setDuration] = useState(0);
-    audio.volume = 0.05;
+    audio.volume = 0.3;
 
     const toggle = () => setPlaying(!playing);
 

@@ -1,6 +1,7 @@
 import React, { useRef, useCallback, useEffect, useState } from "react";
 import { makeStyles, Box, Button, Typography } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "@reach/router";
 import PropTypes from "prop-types";
 
 import { search } from "../services/searchService";
@@ -15,6 +16,7 @@ import logoWhite from "../assets/logo_white.svg";
 
 const useStyles = makeStyles((theme) => ({
     splash: {
+        position: "relative",
         height: "100vh",
         width: "100vw",
         display: "flex",
@@ -32,6 +34,11 @@ const useStyles = makeStyles((theme) => ({
     logo: {
         height: "30%",
         margin: theme.spacing(6, 0),
+    },
+    aboutContainer: {
+        position: "absolute",
+        top: theme.spacing(1),
+        right: theme.spacing(2),
     },
 }));
 
@@ -77,6 +84,9 @@ const HomePage = ({ location }) => {
                 <div className={classes.blob}>
                     <img alt="white logo" src={logoWhite} className={classes.logo}/>
                     <SearchBar searchQuery={searchQuery} submitSearch={submitSearch} />
+                </div>
+                <div className={classes.aboutContainer}>
+                    <Button to="/about" component={Link}>About</Button>
                 </div>
             </div>
             <div ref={resultsRef} />
