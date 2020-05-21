@@ -18,7 +18,7 @@ export const GenreList = ({ genres }) => {
     return (
         <div className={classes.genreList}>
             {genres.map((g, i) =>
-                <Button key={i} color="inherit" variant="outlined" size="medium" disableRipple disableElevation>
+                <Button key={i} color="inherit" variant="outlined" size="small" disableRipple disableElevation>
                     {g}
                 </Button>
             )}

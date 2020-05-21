@@ -12,7 +12,31 @@ import GenreList from "../components/GenreList";
 
 const useStyles = makeStyles((theme) => ({
     albumCover: {
+        position: "relative",
+    },
+    albumCoverImage: {
         borderRadius: theme.shape.borderRadius,
+    },
+    overlay: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "calc(100% - 4px)",
+        backgroundColor: "#454545",
+        borderRadius: theme.shape.borderRadius,
+        opacity: 0,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: theme.spacing(3),
+        textAlign: "center",
+        fontWeight: theme.typography.fontWeightBold,
+        color: "white",
+        transition: ".3s ease",
+        "&:hover": {
+            opacity: 0.8,
+        },
     },
     loadMoreBtn: {
         marginTop: theme.spacing(2),
@@ -114,7 +138,12 @@ export const ArtistPage = ({ id }) => {
                                             artist.albums.items.slice(0, albumCount).map((a, i) =>
                                                 <Grid key={i} item xs={12} sm={6} md={4} lg={3}>
                                                     <Link to={`/albums/${a.id}`} underline="none" component={RouterLink}>
-                                                        <img className={classes.albumCover} alt={a.name} src={a.images[0].url} width="100%" />
+                                                        <div className={classes.albumCover}>
+                                                            <img className={classes.albumCoverImage} alt={a.name} src={a.images[0].url} width="100%" />
+                                                            <div className={classes.overlay}>
+                                                                <span>{a.name}</span>
+                                                            </div>
+                                                        </div>
                                                     </Link>
                                                 </Grid>
                                             )
