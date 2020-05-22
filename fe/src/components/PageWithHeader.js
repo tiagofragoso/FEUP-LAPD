@@ -85,7 +85,7 @@ const Header = ({ image, supertitle, title, titleUrl, subtitle, popularity, comp
                             {subtitle}
                         </Grid>
                         }
-                        {popularity &&
+                        {(popularity || popularity === 0) &&
                         <Grid item xs={12}>
                             {renderPopularity(popularity)}
                         </Grid>
