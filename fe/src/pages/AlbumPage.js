@@ -74,7 +74,7 @@ export const AlbumPage = ({ id }) => {
                     { album.description &&
                         <PageSection title="more about the album">
                             <>
-                                <Typography variant="body1">{album.description}</Typography>
+                                <Typography variant="body1">{album.description.extract}</Typography>
                                 <div className={classes.center}>
                                     <Button
                                         size="large"
@@ -83,7 +83,9 @@ export const AlbumPage = ({ id }) => {
                                         disableRipple
                                         className={classes.readMoreBtn}
                                         endIcon={<Icon className="fab fa-wikipedia-w"/>}
-                                        href="https://wikipedia.org"
+                                        href={album.description.url}
+                                        target="_blank"
+                                        rel="noopener"
                                     >
                                         READ MORE ON
                                     </Button>

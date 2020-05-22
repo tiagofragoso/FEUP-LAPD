@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         top: 0,
         left: 0,
         width: "100%",
-        height: "calc(100% - 4px)",
+        height: "calc(100% - 5px)",
         backgroundColor: "#454545",
         borderRadius: theme.shape.borderRadius,
         opacity: 0,
@@ -169,7 +169,7 @@ export const ArtistPage = ({ id }) => {
                             { artist.description &&
                             <PageSection title="more about the artist">
                                 <>
-                                    <Typography variant="body1">{artist.description}</Typography>
+                                    <Typography variant="body1">{artist.description.extract}</Typography>
                                     <div className={classes.center}>
                                         <Button
                                             size="large"
@@ -178,7 +178,9 @@ export const ArtistPage = ({ id }) => {
                                             disableRipple
                                             className={classes.readMoreBtn}
                                             endIcon={<Icon className="fab fa-wikipedia-w"/>}
-                                            href="https://wikipedia.org"
+                                            href={artist.description.url}
+                                            target="_blank"
+                                            rel="noopener"
                                         >
                                             READ MORE ON
                                         </Button>

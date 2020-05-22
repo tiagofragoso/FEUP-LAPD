@@ -18,7 +18,7 @@ const artist_pipeline = async ({ params }, res) => {
     ] = await Promise.all([
         lookup_artist_top_tracks(id),
         lookup_artist_albums(id),
-        get_extract(spotify_artist_res.name),
+        get_extract(spotify_artist_res.name, "artist"),
     ]);
 
     res.status(200).send({ ...spotify_artist_res, albums, top_tracks, description: wikipedia_extract });

@@ -11,7 +11,14 @@ const album_pipeline = async ({ params }, res) => {
         return;
     }
 
-    const wikipedia_extract = await get_extract(spotify_album_res.name);
+    const wikipedia_extract = await get_extract(
+        spotify_album_res.name,
+        "album",
+        {
+            type: spotify_album_res.album_type,
+            artists: spotify_album_res.artists.map((i) => i.name),
+        },
+    );
 
     res.status(200).send({ ...spotify_album_res, description: wikipedia_extract });
 
