@@ -83,10 +83,8 @@ export const ArtistPage = ({ id }) => {
     }, [dispatch, id]);
 
     return (
-        <PageLayout>
-            { loading && <p>Loading</p> }
-            { error && <p>Error: {error.toString()}</p> }
-            { !loading && !error && artist  &&
+        <PageLayout loading={loading} error={error}>
+            { artist &&
                 <PageWithHeader
                     image={getImage(artist, "artist")}
                     title={artist.name}

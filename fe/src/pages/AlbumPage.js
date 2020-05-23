@@ -50,11 +50,9 @@ export const AlbumPage = ({ id }) => {
     }, [dispatch, id]);
 
     return (
-        <PageLayout>
+        <PageLayout loading={loading} error={error}>
             <>
-                { loading && <p>Loading</p> }
-                { error && <p>Error: {error.toString()}</p> }
-                { !loading && !error && album  &&
+                { album &&
                 <PageWithHeader
                     image={getImage(album, "album")}
                     title={album.name}

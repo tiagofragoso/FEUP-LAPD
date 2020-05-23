@@ -56,11 +56,9 @@ export const TrackPage = ({ id }) => {
     const classes = useStyles();
 
     return (
-        <PageLayout>
+        <PageLayout loading={loading} error={error}>
             <>
-                { loading && <p>Loading</p> }
-                { error && <p>Error: {error.toString()}</p> }
-                { !loading && !error && track  &&
+                {track &&
                 <PageWithHeader
                     image={getImage(track, "track")}
                     title={track.name}

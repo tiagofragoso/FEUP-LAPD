@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useEffect, useState } from "react";
-import { makeStyles, Box, Button, Typography } from "@material-ui/core";
+import { makeStyles, Box, Button, Typography, CircularProgress } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "@reach/router";
 import PropTypes from "prop-types";
@@ -88,10 +88,8 @@ const HomePage = ({ location }) => {
             </div>
             <div ref={resultsRef} />
             { searchQuery &&
-            <PageLayout>
-                { loading && <p>Loading</p> }
-                { error && <p>Error: {error.toString()}</p> }
-                { !loading && !error && results &&
+            <PageLayout loading={loading} error={error}>
+                { results &&
                     <>
                         <Box mb={5}>
                             <Typography variant="h4" component="h4">Showing results for <strong>{searchQuery}</strong></Typography>
