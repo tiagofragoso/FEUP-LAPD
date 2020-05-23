@@ -4,6 +4,7 @@ const initialState = {
     track: null,
     loading: false,
     error: false,
+    lyricsLoading: false,
 };
 
 export default (state = initialState, action) => {
@@ -22,6 +23,22 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 loading: action.payload,
+            };
+        case trackLookupTypes.SET_TRACK_LYRICS_LOADING:
+            return {
+                ...state,
+                lyricsLoading: action.payload,
+            };
+        case trackLookupTypes.SET_TRACK_LYRICS:
+            return {
+                ...state,
+                track: {
+                    ...state.track,
+                    lyrics: {
+                        ...state.track.lyrics,
+                        lyrics: action.payload,
+                    },
+                },
             };
         default:
             return state;
