@@ -12,6 +12,7 @@ import PageSection from "../components/PageSection";
 import AudioPlayer from "../components/AudioPlayer";
 import ArtistList from "../components/ArtistList";
 import SuggestionsModal from "../components/trackpage/SuggestionsModal";
+import { Disclaimers } from "../components/disclaimers/Disclaimer";
 
 const useStyles = makeStyles((theme) => ({
     lyrics: {
@@ -97,6 +98,7 @@ export const TrackPage = ({ id }) => {
                     {!loadingLyrics && track.lyrics && track.lyrics.suggestions &&
                         <SuggestionsModal open={openModal} suggestions={track.lyrics.suggestions} handleClose={handleClose} />
                     }
+                    <Disclaimers spotify lyrics />
                 </PageWithHeader>
                 }
             </>

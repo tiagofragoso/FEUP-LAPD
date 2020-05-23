@@ -9,6 +9,7 @@ import PageWithHeader from "../components/PageWithHeader";
 import PageSection from "../components/PageSection";
 import TrackCard from "../components/albumpage/TrackCard";
 import GenreList from "../components/GenreList";
+import { Disclaimers } from "../components/disclaimers/Disclaimer";
 
 const useStyles = makeStyles((theme) => ({
     albumCover: {
@@ -82,10 +83,9 @@ export const ArtistPage = ({ id }) => {
 
     return (
         <PageLayout>
-            <div>
-                { loading && <p>Loading</p> }
-                { error && <p>Error: {error.toString()}</p> }
-                { !loading && !error && artist  &&
+            { loading && <p>Loading</p> }
+            { error && <p>Error: {error.toString()}</p> }
+            { !loading && !error && artist  &&
                 <PageWithHeader
                     image={artist.images[0].url}
                     title={artist.name}
@@ -191,8 +191,8 @@ export const ArtistPage = ({ id }) => {
                         </Grid>
                     </Grid>
                 </PageWithHeader>
-                }
-            </div>
+            }
+            <Disclaimers spotify wikipedia />
         </PageLayout>
     );
 };

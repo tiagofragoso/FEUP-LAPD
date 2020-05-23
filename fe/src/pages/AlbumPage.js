@@ -11,7 +11,7 @@ import PageSection from "../components/PageSection";
 import TrackCard from "../components/albumpage/TrackCard";
 import ArtistList from "../components/ArtistList";
 import GenreList from "../components/GenreList";
-
+import { Disclaimers } from "../components/disclaimers/Disclaimer";
 const useStyles = makeStyles((theme) => ({
     center: {
         width: "100%",
@@ -96,6 +96,7 @@ export const AlbumPage = ({ id }) => {
                 </PageWithHeader>
                 }
             </>
+            <Disclaimers spotify wikipedia />
         </PageLayout>
     );
 };

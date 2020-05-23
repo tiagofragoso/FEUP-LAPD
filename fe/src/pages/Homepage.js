@@ -13,6 +13,7 @@ import CustomTabs from "../components/CustomTabs";
 
 import blob from "../assets/blob.svg";
 import logoWhite from "../assets/logo_white.svg";
+import { Disclaimers } from "../components/disclaimers/Disclaimer";
 
 const useStyles = makeStyles((theme) => ({
     splash: {
@@ -110,10 +111,7 @@ const HomePage = ({ location }) => {
                                 })
                             }
                         />
-                        <Typography variant="body2">
-                            Haven&apos;t found what you were looking for?
-                            <Button onClick={scrollToTop} size="small">Search again</Button>
-                        </Typography>
+                        <Disclaimers spotify />
                     </>
                 }
             </PageLayout>
