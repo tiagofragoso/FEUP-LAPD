@@ -1,12 +1,11 @@
 import React from "react";
 import { Link as RouterLink } from "@reach/router";
-import { Card, CardMedia, CardContent, Link } from "@material-ui/core";
+import { Card, CardMedia, CardContent, Link, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
 import { headerFontFamily } from "../../AppTheme";
-
-import trackPlaceholder from "../../assets/track_placeholder.png";
+import getImage from "../../utils/getImage";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,21 +21,13 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#F3F3F3",
         boxShadow: "none",
     },
-    details: {
+    cardTitle: {
         fontFamily: headerFontFamily.join(","),
-        fontSize: theme.typography.pxToRem(20),
         fontWeight: theme.typography.fontWeightBold,
+        overflow: "hidden",
+        textOverflow: "ellipsis",
     },
 }));
-
-const getImage = (item, type) => {
-    const imgArray = type !== "track" ? item.images : item.album.images;
-    if (imgArray.length) {
-        return imgArray[0].url;
-    } else {
-        return trackPlaceholder;
-    }
-};
 
 
 export const SearchResultCard = ({ item, type }) => {
@@ -46,8 +37,13 @@ export const SearchResultCard = ({ item, type }) => {
         <Link to={`/${type}s/${item.id}`} underline="none" component={RouterLink}>
             <Card classes={{ root: classes.card }}>
                 <CardMedia className={classes.cover} image={imageUrl} />
-                <CardContent classes={{ root: classes.details }}>
-                    {item.name}
+                <CardContent>
+                    <Typography className={classes.cardTitle} variant="body1">{item.name}</Typography>
+                    { (type === "album" || type === "track") &&
+                        <Typography variant="body2">
+                            {`${item.artists[0].name}${item.artists.length > 1 ? `, ${item.artists.length - 1} more` : ""}`}
+                        </Typography>
+                    }
                 </CardContent>
             </Card>
         </Link>
