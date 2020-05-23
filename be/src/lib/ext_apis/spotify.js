@@ -77,7 +77,7 @@ const search = ({ q, type }) => request(
         params: {
             q,
             type,
-            "limit": "9",
+            "limit": "30",
         },
     },
 );

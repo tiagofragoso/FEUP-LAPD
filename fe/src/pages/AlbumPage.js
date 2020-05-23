@@ -12,6 +12,8 @@ import TrackCard from "../components/albumpage/TrackCard";
 import ArtistList from "../components/ArtistList";
 import GenreList from "../components/GenreList";
 import { Disclaimers } from "../components/disclaimers/Disclaimer";
+import getImage from "../utils/getImage";
+
 const useStyles = makeStyles((theme) => ({
     center: {
         width: "100%",
@@ -54,7 +56,7 @@ export const AlbumPage = ({ id }) => {
                 { error && <p>Error: {error.toString()}</p> }
                 { !loading && !error && album  &&
                 <PageWithHeader
-                    image={album.images[0].url}
+                    image={getImage(album, "album")}
                     title={album.name}
                     titleUrl={album.external_urls.spotify}
                     subtitle={artists(album)}

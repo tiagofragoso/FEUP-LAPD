@@ -68,10 +68,6 @@ const HomePage = ({ location }) => {
         smoothScrollToRef(resultsRef);
     };
 
-    const scrollToTop = () => {
-        smoothScrollToRef(topRef);
-    };
-
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         if (params.has("q")) {

@@ -10,6 +10,7 @@ import PageSection from "../components/PageSection";
 import TrackCard from "../components/albumpage/TrackCard";
 import GenreList from "../components/GenreList";
 import { Disclaimers } from "../components/disclaimers/Disclaimer";
+import getImage from "../utils/getImage";
 
 const useStyles = makeStyles((theme) => ({
     albumCover: {
@@ -87,7 +88,7 @@ export const ArtistPage = ({ id }) => {
             { error && <p>Error: {error.toString()}</p> }
             { !loading && !error && artist  &&
                 <PageWithHeader
-                    image={artist.images[0].url}
+                    image={getImage(artist, "artist")}
                     title={artist.name}
                     titleUrl={artist.external_urls.spotify}
                     subtitle={

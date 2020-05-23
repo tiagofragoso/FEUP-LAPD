@@ -13,6 +13,7 @@ import AudioPlayer from "../components/AudioPlayer";
 import ArtistList from "../components/ArtistList";
 import SuggestionsModal from "../components/trackpage/SuggestionsModal";
 import { Disclaimers } from "../components/disclaimers/Disclaimer";
+import getImage from "../utils/getImage";
 
 const useStyles = makeStyles((theme) => ({
     lyrics: {
@@ -61,7 +62,7 @@ export const TrackPage = ({ id }) => {
                 { error && <p>Error: {error.toString()}</p> }
                 { !loading && !error && track  &&
                 <PageWithHeader
-                    image={track.album.images[0].url}
+                    image={getImage(track, "track")}
                     title={track.name}
                     titleUrl={track.external_urls.spotify}
                     subtitle={albumAndArtists(track)}
