@@ -28,7 +28,9 @@ const useStyles = makeStyles((theme) => ({
 const albumAndArtists = ({ album, artists }) => (
     <>
         <Link to={`/albums/${album.id}`} color="inherit" underline="none" component={RouterLink}>
-            <Typography variant="h6" component="span" display="block">{album.name}</Typography>
+            <Typography variant="h6" component="span" display="block">
+                <strong>{album.name}</strong>
+            </Typography>
         </Link>
         <Typography variant="h6" component="span">by </Typography>
         <ArtistList artists={artists} variant="h6" />

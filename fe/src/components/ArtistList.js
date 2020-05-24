@@ -15,7 +15,7 @@ export const ArtistList = ({ artists, variant }) => {
         <React.Fragment key={id}>
             <Link color="inherit" to={`/artists/${id}`} underline="none" component={RouterLink}>
                 <Typography className={classes.artistName} variant={variant} component="span">
-                    {name}
+                    <strong>{name}</strong>
                 </Typography>
             </Link>
             {index !== artists.length - 1 ? ", " : null}
