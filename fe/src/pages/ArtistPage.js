@@ -103,6 +103,11 @@ export const ArtistPage = ({ id }) => {
                             <PageSection title="top tracks">
                                 <div className={classes.columnCenter}>
                                     <Grid container alignItems="stretch" spacing={2} >
+                                        {artist.top_tracks.tracks.length === 0 &&
+                                        <Grid item xs={12}>
+                                            <Typography variant="body1">No results</Typography>
+                                        </Grid>
+                                        }
                                         {
                                             (expanded ?
                                                 artist.top_tracks.tracks :
@@ -114,7 +119,7 @@ export const ArtistPage = ({ id }) => {
                                             )
                                         }
                                     </Grid>
-                                    {!expanded &&
+                                    {!expanded && artist.top_tracks.tracks.length > 0 &&
                                         <Button
                                             size="large"
                                             variant="contained"
@@ -133,6 +138,11 @@ export const ArtistPage = ({ id }) => {
                             <PageSection title="albums">
                                 <div className={classes.columnCenter}>
                                     <Grid container alignItems="stretch" spacing={2}>
+                                        {artist.albums.items.length === 0 &&
+                                        <Grid item xs={12}>
+                                            <Typography variant="body1">No results</Typography>
+                                        </Grid>
+                                        }
                                         {
                                             artist.albums.items.slice(0, albumCount).map((a, i) =>
                                                 <Grid key={i} item xs={12} sm={6} md={4} lg={3}>
@@ -149,7 +159,7 @@ export const ArtistPage = ({ id }) => {
                                         }
                                     </Grid>
                                     {
-                                        (albumCount <= artist.albums.items.length) &&
+                                        (artist.albums.items.length > 0 && (albumCount <= artist.albums.items.length)) &&
                                         <Button
                                             size="large"
                                             variant="contained"
