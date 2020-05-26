@@ -4,7 +4,8 @@ const API_URL = "https://en.wikipedia.org/w/api.php";
 
 const get_extract = async (query, type, album_details) => {
     try {
-        const { data: { query: { search: search_results } } } = await search(query);
+        const { data: { query: { search: search_results } } } =
+            await search(`${query}${type === "album" ? ` ${album_details.artists[0]}` : ""}`);
         let id;
         if (search_results.length) {
             const { result: topResult, score } = sortResults(search_results, query, type, album_details);
@@ -81,6 +82,7 @@ const sortResults = (results, query, type, album_details) => results.reduce(
             acc.result = curr;
             acc.score = currScore;
         }
+
         return acc;
     },
     { score: -1 });
