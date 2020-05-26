@@ -18,13 +18,38 @@ Project developed in the LAPD course @FEUP
 
 **Backend**:
 
-- NodeJS
+- Node.js
 - Express
 
 **Frontend**:
 
 - React
 - Redux
+- MaterialUI
+
+### How to run
+
+> Requires Node.js >= v10  
+
+#### Frontend
+
+Populate `fe/.env` with `API_URL`
+
+```bash
+cd fe
+npm i
+npm start
+```
+
+#### Backend
+
+Populate `be/.env` with Spotify credentials
+
+```bash
+cd be
+npm i
+npm start # or npm run watch (uses Nodemon and restarts when code changes occur)
+```
 
 ## Developers
 
