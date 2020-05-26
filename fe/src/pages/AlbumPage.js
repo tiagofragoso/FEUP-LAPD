@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import PageLayout from "../components/PageLayout";
 import PageWithHeader from "../components/PageWithHeader";
 import PageSection from "../components/PageSection";
-import TrackCard from "../components/albumpage/TrackCard";
+import TrackCard from "../components/TrackCard";
 import ArtistList from "../components/ArtistList";
 import GenreList from "../components/GenreList";
 import { Disclaimers } from "../components/disclaimers/Disclaimer";
@@ -99,6 +99,10 @@ export const AlbumPage = ({ id }) => {
             <Disclaimers spotify wikipedia />
         </PageLayout>
     );
+};
+
+artists.propTypes = {
+    artists: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default AlbumPage;

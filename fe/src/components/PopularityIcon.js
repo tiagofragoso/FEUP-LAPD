@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
+import PropTypes from "prop-types";
 
 import fireIcon from "../assets/fire.svg";
 import fireFadeIcon from "../assets/fire_fade.svg";
@@ -42,6 +43,12 @@ PopularityIcon.defaultProps = {
     ratio: 1,
     size: "regular",
     background: "light",
+};
+
+PopularityIcon.propTypes = {
+    ratio: PropTypes.number,
+    size: PropTypes.string,
+    background: PropTypes.string,
 };
 
 export default PopularityIcon;

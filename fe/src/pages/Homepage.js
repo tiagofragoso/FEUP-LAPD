@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useEffect, useState } from "react";
-import { makeStyles, Box, Button, Typography, CircularProgress } from "@material-ui/core";
+import { makeStyles, Box, Button, Typography } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "@reach/router";
 import PropTypes from "prop-types";
@@ -58,7 +58,7 @@ const HomePage = ({ location }) => {
                 setSearchQuery(data.q);
                 setTimeout(() => {
                     scrollToResults();
-                }, 500);
+                }, 300);
             }
         },
         [dispatch]
@@ -68,10 +68,16 @@ const HomePage = ({ location }) => {
         smoothScrollToRef(resultsRef);
     };
 
+    const scrollToTop = () => {
+        smoothScrollToRef(topRef);
+    };
+
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         if (params.has("q")) {
             submitSearch({ q: params.get("q"), type: ["album", "artist", "track"].join(",") });
+        } else {
+            scrollToTop();
         }
     }, [location, submitSearch]);
 

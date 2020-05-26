@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles, Button } from "@material-ui/core";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
     genreList: {
@@ -24,6 +25,10 @@ export const GenreList = ({ genres }) => {
             )}
         </div>
     );
+};
+
+GenreList.propTypes = {
+    genres: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default GenreList;

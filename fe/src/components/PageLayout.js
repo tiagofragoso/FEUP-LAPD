@@ -1,6 +1,7 @@
 import React from "react";
 import { CircularProgress, makeStyles } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
+import PropTypes from "prop-types";
 
 import Navbar from "./Navbar";
 
@@ -32,7 +33,7 @@ export const PageLayout = ({ children, error, loading }) => {
             <div className={classes.content}>
                 <div className={classes.center}>
                     { loading && <CircularProgress/> }
-                    { error && <Alert severity="error">{error.toString()}</Alert>}
+                    { error && <Alert severity="error">{error}</Alert>}
                 </div>
                 { !loading && !error &&
                     children
@@ -40,7 +41,15 @@ export const PageLayout = ({ children, error, loading }) => {
             </div>
         </div>
     );
+};
 
+PageLayout.propTypes = {
+    error: PropTypes.any,
+    loading: PropTypes.bool,
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+    ]),
 };
 
 export default PageLayout;

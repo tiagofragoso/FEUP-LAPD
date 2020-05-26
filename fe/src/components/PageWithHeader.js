@@ -121,6 +121,7 @@ Header.propTypes = {
     subtitle: PropTypes.node.isRequired,
     popularity: PropTypes.number.isRequired,
     component: PropTypes.node,
+    expandedComponent: PropTypes.bool,
 };
 
 PageWithHeader.propTypes = {

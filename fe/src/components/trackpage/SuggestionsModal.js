@@ -4,6 +4,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText,
     FormControl, FormLabel }  from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
 
 import { reloadLyrics } from "../../services/trackService";
 
@@ -52,7 +53,8 @@ export const SuggestionsModal = ({ open, suggestions, handleClose }) => {
                         <FormLabel classes={{ root: classes.formGroupTitle }} component="legend" focused={false}>Track name</FormLabel>
                         <RadioGroup defaultValue={suggestions.tracks[0]} aria-label="track name" name="track">
                             {
-                                suggestions.tracks.map((track, i) => <SuggestionRadio key={i} value={track} name="track" register={register} />)
+                                suggestions.tracks.map((track, i) =>
+                                    <SuggestionRadio key={i} value={track} name="track" register={register} />)
                             }
                         </RadioGroup>
                     </FormControl>
@@ -60,7 +62,8 @@ export const SuggestionsModal = ({ open, suggestions, handleClose }) => {
                         <FormLabel classes={{ root: classes.formGroupTitle }} component="legend" focused={false}>Artist name</FormLabel>
                         <RadioGroup defaultValue={suggestions.artists[0]} aria-label="artist name" name="artist">
                             {
-                                suggestions.artists.map((artist, i) => <SuggestionRadio key={i} value={artist} name="artist" register={register} />)
+                                suggestions.artists.map((artist, i) =>
+                                    <SuggestionRadio key={i} value={artist} name="artist" register={register} />)
                             }
                         </RadioGroup>
                     </FormControl>
@@ -76,6 +79,18 @@ export const SuggestionsModal = ({ open, suggestions, handleClose }) => {
             </form>
         </Dialog>
     );
+};
+
+SuggestionRadio.propTypes = {
+    value: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    register: PropTypes.any.isRequired,
+};
+
+SuggestionsModal.propTypes = {
+    open: PropTypes.bool.isRequired,
+    suggestions: PropTypes.array.isRequired,
+    handleClose: PropTypes.func.isRequired,
 };
 
 export default SuggestionsModal;

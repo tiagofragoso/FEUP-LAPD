@@ -28,8 +28,8 @@ export const AboutPage = () => {
             <Typography variant="h3">About us</Typography>
             <div className={classes.content}>
                 <Typography className={classes.paragraph} variant="body1" component="p">
-                    <strong>musicl</strong> is a Web Application developed as a course project for the LAPD (
-                    Annotation and Document Processing Languages) course unit at FEUP.
+                    <strong>musicl</strong> is a Web Application developed as a course project for the LAPD
+                    (Annotation and Document Processing Languages) course unit at FEUP.
                 </Typography>
                 <Typography className={classes.paragraph} variant="body1" component="p">
                     The platform is divided into 2 components: <strong>this application</strong> and

@@ -7,7 +7,7 @@ import { Link as RouterLink } from "@reach/router";
 import PageLayout from "../components/PageLayout";
 import PageWithHeader from "../components/PageWithHeader";
 import PageSection from "../components/PageSection";
-import TrackCard from "../components/albumpage/TrackCard";
+import TrackCard from "../components/TrackCard";
 import GenreList from "../components/GenreList";
 import { Disclaimers } from "../components/disclaimers/Disclaimer";
 import getImage from "../utils/getImage";
@@ -148,7 +148,10 @@ export const ArtistPage = ({ id }) => {
                                                 <Grid key={i} item xs={12} sm={6} md={4} lg={3}>
                                                     <Link to={`/albums/${a.id}`} underline="none" component={RouterLink}>
                                                         <div className={classes.albumCover}>
-                                                            <img className={classes.albumCoverImage} alt={a.name} src={a.images[0].url} width="100%" />
+                                                            <img
+                                                                className={classes.albumCoverImage}
+                                                                alt={a.name} src={a.images[0].url} width="100%"
+                                                            />
                                                             <div className={classes.overlay}>
                                                                 <span>{a.name}</span>
                                                             </div>

@@ -4,10 +4,10 @@ import { makeStyles } from "@material-ui/styles";
 import { Link as RouterLink } from "@reach/router";
 import PropTypes from "prop-types";
 
-import { msToMinutesSeconds } from "../../utils/dateUtils";
-import ArtistList from "../ArtistList";
-import { calculatePopularityRatios } from "../../utils/popularityRatios";
-import PopularityIcon from "../PopularityIcon";
+import { msToMinutesSeconds } from "../utils/dateUtils";
+import ArtistList from "./ArtistList";
+import { calculatePopularityRatios } from "../utils/popularityRatios";
+import PopularityIcon from "./PopularityIcon";
 
 const useStyles = makeStyles((theme) => ({
     trackCardWrapper: {
@@ -93,6 +93,7 @@ export const TrackCard = ({ track, collapsed }) => {
 
 TrackCard.propTypes = {
     track: PropTypes.object.isRequired,
+    collapsed: PropTypes.bool,
 };
 
 export default TrackCard;

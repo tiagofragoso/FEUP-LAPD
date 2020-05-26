@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, Typography } from "@material-ui/core";
+import PropTypes from "prop-types";
 
 export const Disclaimers = ({ spotify, wikipedia, lyrics }) => (
     <>
@@ -35,3 +36,14 @@ const LyricsDisclaimer = () =>
         what="Lyrics"
         who={{ name: "Lyrics.ovh", href: "https://lyricsovh.docs.apiary.io/" }}
     />;
+
+Disclaimers.propTypes = {
+    spotify: PropTypes.bool,
+    wikipedia: PropTypes.bool,
+    lyrics: PropTypes.bool,
+};
+
+Disclaimer.propTypes = {
+    what: PropTypes.string.isRequired,
+    who: PropTypes.object.isRequired,
+};
