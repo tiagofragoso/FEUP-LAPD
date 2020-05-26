@@ -64,7 +64,7 @@ export const AlbumPage = ({ id }) => {
                     expandedComponent
                 >
                     <PageSection title="tracks">
-                        { album.tracks.items.map((t, i) =>
+                        { album.tracks.map((t, i) =>
                             <div key={i} className={classes.trackCard}>
                                 <TrackCard track={t} />
                             </div>)

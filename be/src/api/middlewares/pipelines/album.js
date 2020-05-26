@@ -1,5 +1,6 @@
 const { lookup_album } = require("../../../lib/ext_apis/spotify");
 const { get_extract } = require("../../../lib/ext_apis/wikipedia");
+const { serialize_album } = require("../serializers/album");
 
 const album_pipeline = async ({ params }, res) => {
     const { id } = params;
@@ -20,7 +21,8 @@ const album_pipeline = async ({ params }, res) => {
         },
     );
 
-    res.status(200).send({ ...spotify_album_res, description: wikipedia_extract });
+    const serialized_album = serialize_album({ ...spotify_album_res, description: wikipedia_extract });
+    res.status(200).send(serialized_album);
 
 };
 

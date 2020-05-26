@@ -1,5 +1,6 @@
 const { lookup_artist, lookup_artist_top_tracks, lookup_artist_albums } = require("../../../lib/ext_apis/spotify");
 const { get_extract } = require("../../../lib/ext_apis/wikipedia");
+const { serialize_artist } = require("../serializers/artist");
 
 const artist_pipeline = async ({ params }, res) => {
     const { id } = params;
@@ -21,7 +22,9 @@ const artist_pipeline = async ({ params }, res) => {
         get_extract(spotify_artist_res.name, "artist"),
     ]);
 
-    res.status(200).send({ ...spotify_artist_res, albums, top_tracks, description: wikipedia_extract });
+    const serialized_artist = serialize_artist({ ...spotify_artist_res, albums, top_tracks, description: wikipedia_extract });
+
+    res.status(200).send(serialized_artist);
 
 };
 

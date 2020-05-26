@@ -103,7 +103,7 @@ const HomePage = ({ location }) => {
                         <CustomTabs
                             tabs={
                                 Object.keys(results).map((key) => {
-                                    const { items } = results[key];
+                                    const items = results[key];
                                     return {
                                         label: key,
                                         items: <SearchResultsGrid items={items} type={key.slice(0, -1)} />,

@@ -91,7 +91,7 @@ export const ArtistPage = ({ id }) => {
                     titleUrl={artist.external_urls.spotify}
                     subtitle={
                         <Typography variant="h6" component="span">
-                            <strong>{artist.followers.total}</strong> followers
+                            <strong>{artist.followers}</strong> followers
                         </Typography>
                     }
                     popularity={artist.popularity}
@@ -103,15 +103,15 @@ export const ArtistPage = ({ id }) => {
                             <PageSection title="top tracks">
                                 <div className={classes.columnCenter}>
                                     <Grid container alignItems="stretch" spacing={2} >
-                                        {artist.top_tracks.tracks.length === 0 &&
+                                        {artist.top_tracks.length === 0 &&
                                         <Grid item xs={12}>
                                             <Typography variant="body1">No results</Typography>
                                         </Grid>
                                         }
                                         {
                                             (expanded ?
-                                                artist.top_tracks.tracks :
-                                                artist.top_tracks.tracks.slice(0, 5)
+                                                artist.top_tracks :
+                                                artist.top_tracks.slice(0, 5)
                                             ).map((t, i) =>
                                                 <Grid key={i} item xs={12} md={expanded ? 6 : 12}>
                                                     <TrackCard track={t} collapsed />
@@ -119,7 +119,7 @@ export const ArtistPage = ({ id }) => {
                                             )
                                         }
                                     </Grid>
-                                    {!expanded && artist.top_tracks.tracks.length > 0 &&
+                                    {!expanded && artist.top_tracks.length > 0 &&
                                         <Button
                                             size="large"
                                             variant="contained"
@@ -138,19 +138,19 @@ export const ArtistPage = ({ id }) => {
                             <PageSection title="albums">
                                 <div className={classes.columnCenter}>
                                     <Grid container alignItems="stretch" spacing={2}>
-                                        {artist.albums.items.length === 0 &&
+                                        {artist.albums.length === 0 &&
                                         <Grid item xs={12}>
                                             <Typography variant="body1">No results</Typography>
                                         </Grid>
                                         }
                                         {
-                                            artist.albums.items.slice(0, albumCount).map((a, i) =>
+                                            artist.albums.slice(0, albumCount).map((a, i) =>
                                                 <Grid key={i} item xs={12} sm={6} md={4} lg={3}>
                                                     <Link to={`/albums/${a.id}`} underline="none" component={RouterLink}>
                                                         <div className={classes.albumCover}>
                                                             <img
                                                                 className={classes.albumCoverImage}
-                                                                alt={a.name} src={a.images[0].url} width="100%"
+                                                                alt={a.name} src={getImage(a)} width="100%"
                                                             />
                                                             <div className={classes.overlay}>
                                                                 <span>{a.name}</span>
@@ -162,7 +162,7 @@ export const ArtistPage = ({ id }) => {
                                         }
                                     </Grid>
                                     {
-                                        (artist.albums.items.length > 0 && (albumCount <= artist.albums.items.length)) &&
+                                        (artist.albums.length > 0 && (albumCount <= artist.albums.length)) &&
                                         <Button
                                             size="large"
                                             variant="contained"

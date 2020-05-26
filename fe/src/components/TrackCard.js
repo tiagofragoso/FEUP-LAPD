@@ -74,7 +74,7 @@ export const TrackCard = ({ track, collapsed }) => {
                     <Typography variant="body1" display="inline" className={classes.trackNumber}>
                         {msToMinutesSeconds(track.duration_ms)}
                     </Typography>
-                    <Link className={classes.trackLink} href={track.external_urls.spotify} target="_blank" rel="noopener">
+                    <Link className={classes.trackLink} href={track.external_urls.spotify} underline="none" target="_blank" rel="noopener">
                         <Icon color="inherit" className="fab fa-spotify"/>
                     </Link>
                 </>
