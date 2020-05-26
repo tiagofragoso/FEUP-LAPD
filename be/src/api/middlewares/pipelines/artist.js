@@ -1,11 +1,26 @@
-const { lookup_artist, lookup_artist_top_tracks, lookup_artist_albums } = require("../../../lib/ext_apis/spotify");
+const { lookup_artist, lookup_artist_top_tracks, lookup_artist_albums, SPOTIFY_ERRORS } = require("../../../lib/ext_apis/spotify");
 const { get_extract } = require("../../../lib/ext_apis/wikipedia");
 const { serialize_artist } = require("../serializers/artist");
 
 const artist_pipeline = async ({ params }, res) => {
     const { id } = params;
 
-    const spotify_artist_res = await lookup_artist(id);
+    let spotify_artist_res;
+    try {
+        spotify_artist_res = await lookup_artist(id);
+    } catch (err) {
+        switch (err.message) {
+            case SPOTIFY_ERRORS.GENERIC_ERROR:
+                res.status(500).send();
+                return;
+            case SPOTIFY_ERRORS.NOT_FOUND:
+                res.status(404).send();
+                return;
+            default:
+                res.status(500).send();
+                return;
+        }
+    }
 
     if (!spotify_artist_res) {
         res.status(500).send();

@@ -1,11 +1,27 @@
-const { lookup_album } = require("../../../lib/ext_apis/spotify");
+const { lookup_album, SPOTIFY_ERRORS } = require("../../../lib/ext_apis/spotify");
 const { get_extract } = require("../../../lib/ext_apis/wikipedia");
 const { serialize_album } = require("../serializers/album");
 
 const album_pipeline = async ({ params }, res) => {
     const { id } = params;
 
-    const spotify_album_res = await lookup_album(id);
+    let spotify_album_res;
+
+    try {
+        spotify_album_res = await lookup_album(id);
+    } catch (err) {
+        switch (err.message) {
+            case SPOTIFY_ERRORS.GENERIC_ERROR:
+                res.status(500).send();
+                return;
+            case SPOTIFY_ERRORS.NOT_FOUND:
+                res.status(404).send();
+                return;
+            default:
+                res.status(500).send();
+                return;
+        }
+    }
 
     if (!spotify_album_res) {
         res.status(500).send();

@@ -6,6 +6,11 @@ const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } = require("../../config");
 const API_URL = "https://api.spotify.com/v1";
 const AUTH_API_URL = "https://accounts.spotify.com/api/token";
 
+const SPOTIFY_ERRORS = Object.freeze({
+    NOT_FOUND: "NOT_FOUND",
+    GENERIC_ERROR: "GENERIC_ERROR",
+});
+
 let bearer_token;
 
 const auth = async () => {
@@ -64,9 +69,11 @@ const request = async (url, options = {}) => {
             bearer_token = null;
             console.log("Got 401. Re-authenticating");
             return request(url, options);
+        } else if (err.response.status === 400 || err.response.status === 404) {
+            throw new Error(SPOTIFY_ERRORS.NOT_FOUND);
         } else {
             console.error(err);
-            return null;
+            throw new Error(SPOTIFY_ERRORS.GENERIC_ERROR);
         }
     }
 };
@@ -113,4 +120,5 @@ module.exports = {
     lookup_artist,
     lookup_artist_top_tracks,
     lookup_artist_albums,
+    SPOTIFY_ERRORS,
 };

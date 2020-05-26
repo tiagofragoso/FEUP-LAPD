@@ -1,11 +1,27 @@
-const { lookup_track } = require("../../../lib/ext_apis/spotify");
+const { lookup_track, SPOTIFY_ERRORS } = require("../../../lib/ext_apis/spotify");
 const { get_lyrics } = require("../../../lib/ext_apis/lyrics_ovh");
 const { serialize_track } = require("../serializers/track");
 
 const track_pipeline = async ({ params }, res) => {
     const { id } = params;
 
-    const spotify_res = await lookup_track(id);
+    let spotify_res;
+
+    try {
+        spotify_res = await lookup_track(id);
+    } catch (err) {
+        switch (err.message) {
+            case SPOTIFY_ERRORS.GENERIC_ERROR:
+                res.status(500).send();
+                return;
+            case SPOTIFY_ERRORS.NOT_FOUND:
+                res.status(404).send();
+                return;
+            default:
+                res.status(500).send();
+                return;
+        }
+    }
 
     if (!spotify_res) {
         res.status(500).send();

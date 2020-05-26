@@ -5,6 +5,7 @@ const serialize_artist = (result) => (
         ...filterKeys(result, [
             "albums",
             "description",
+            "external_ids",
             "external_urls",
             "genres",
             "id",
