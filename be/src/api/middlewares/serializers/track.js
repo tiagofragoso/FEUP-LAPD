@@ -12,7 +12,7 @@ const serialize_track = (result) => (
             "id",
             "name",
             "popularity",
-            "preivew_url",
+            "preview_url",
             "lyrics",
         ]),
         artists: result.artists.map((a) => filterKeys(a, ["id", "name"])),
