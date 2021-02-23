@@ -10,7 +10,7 @@ Project developed in the LAPD course @FEUP
 
 - Spotify API
 - Wikipedia API
-- Vagalume API
+- Lyrics.ovh API
 
 > **Disclaimer**: The information provided by this application is owned by the APIs being used and credit should be given to the data sources.
 
