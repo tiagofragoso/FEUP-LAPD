@@ -30,10 +30,10 @@ export const PopularityIcon = ({ ratio, size, background }) => {
     return (
         <div className={classes.popularityWrapper} style={{ width: `${width}px`, height: `${height}px` }}>
             <div className={classes.colored} style={{ clip: `rect(${(1 - ratio) * height}px, ${height}px, ${height}px, 0px)` }}>
-                <img src={fireIcon} height={`${height}px`} />
+                <img alt="" src={fireIcon} height={`${height}px`} />
             </div>
             <div className={classes.faded}>
-                <img src={fadedIcon} height={`${height}px`} />
+                <img alt="" src={fadedIcon} height={`${height}px`} />
             </div>
         </div>
     );
