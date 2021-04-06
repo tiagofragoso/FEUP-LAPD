@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "center",
     },
+    herokuAlert: {
+        marginTop: "1em",
+    },
 }));
 
 export const PageLayout = ({ children, error, loading }) => {
@@ -30,6 +33,9 @@ export const PageLayout = ({ children, error, loading }) => {
     return (
         <div className={classes.page}>
             <Navbar />
+            <Alert className={classes.herokuAlert} severity="info">
+                Expect some delay on the first request. The backend for this demo is running on a free Heroku dyno.
+            </Alert>
             <div className={classes.content}>
                 <div className={classes.center}>
                     { loading && <CircularProgress/> }
